@@ -8,7 +8,7 @@ public class UDPClient {
 	InetAddress address ;
 	byte[] buf ;
 	
-	public UDPClient() {
+	public UDPClient(String addr) {
 		try {
 			socket = new DatagramSocket() ;
 		} catch (SocketException e) {
@@ -16,7 +16,8 @@ public class UDPClient {
 			e.printStackTrace();
 		}
 		try {
-			address = InetAddress.getByName("localhost") ;
+			address = InetAddress.getByName(addr);
+
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -25,14 +26,14 @@ public class UDPClient {
 	
 	public String send (String msg) {
 		buf = msg.getBytes() ;
-		DatagramPacket packet = new DatagramPacket(buf,buf.length,address,1237) ;
+		DatagramPacket packet = new DatagramPacket(buf,buf.length,address,1246) ; //Constructs a datagram packet for sending packets of length length to the specified port number on the specified host.
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		packet = new DatagramPacket(buf,buf.length) ;
+		packet = new DatagramPacket(buf,buf.length) ;//Constructs a DatagramPacket for receiving packets of length length.
 		try {
 			socket.receive(packet);
 		} catch (IOException e) {
@@ -44,10 +45,10 @@ public class UDPClient {
 	}
 	
 	public static void main (String[] args) {
-		UDPClient cl = new UDPClient() ;
-		String ret = cl.send("bonsoir") ;
+		UDPClient cl = new UDPClient("10.2.255.255") ; // Louis a mis 255.255.255.255
+		//UDPClient cl = new UDPClient("localhost") ;
+		String ret = cl.send("Salut c'est Andréa") ;
 		System.out.println(ret) ;
-		
 	}
 		
 }

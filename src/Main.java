@@ -15,8 +15,9 @@ public class Main {
 		NetworkManager netmanager = new NetworkManager();
 		netmanager.run();
 		
-		//	DBM.close();
-		// trouver comment récup l'adresse et tester avec 2 pcs
+		DBM.close();
+		// trouver comment récup l'adresse et tester avec 2 pcs -> ok
+		
 		// puis mettre en place le broadcast
 	}	
 }

@@ -12,9 +12,8 @@ public class NetworkManager {
 	public NetworkManager () {
 	
 		try {
-			dtgSocket = new DatagramSocket(1237);
+			dtgSocket = new DatagramSocket(1246);
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -35,21 +34,20 @@ public class NetworkManager {
 			int port = inPacket.getPort() ;
 			
 			String received = new String(inPacket.getData(), 0, inPacket.getLength()) ;
-			String msg = "ahahaha" ;
+			String msg = "J'ai reçu " + received ;
 			buffer=msg.getBytes();
 			DatagramPacket outPacket = new DatagramPacket(buffer, buffer.length, address, port);
+			System.out.println(msg);
 			try {
 				dtgSocket.send(outPacket);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
+		this.close();
 	}
 	
 	public void close() {
 		dtgSocket.close() ;
 	}
-
-	
 }
