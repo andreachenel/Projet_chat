@@ -1,0 +1,30 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-17d5cf057ad-55c7ce0d5df1df54": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "sample.db",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"database": "/home/chenel/4A/COO/Projet_chat/Projet_chat/target/sample.db",
+				"url": "jdbc:sqlite:/home/chenel/4A/COO/Projet_chat/Projet_chat/target/sample.db",
+				"type": "dev",
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}
