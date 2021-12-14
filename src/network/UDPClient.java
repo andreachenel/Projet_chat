@@ -24,9 +24,9 @@ public class UDPClient {
 		}
 	}
 	
-	public String send (String msg) {
+	public String broadcast (String msg) {
 		buf = msg.getBytes() ;
-		DatagramPacket packet = new DatagramPacket(buf,buf.length,address,1246) ; //Constructs a datagram packet for sending packets of length length to the specified port number on the specified host.
+		DatagramPacket packet = new DatagramPacket(buf,buf.length,address,1252) ; //Constructs a datagram packet for sending packets of length length to the specified port number on the specified host.
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
@@ -44,11 +44,10 @@ public class UDPClient {
 		return received ;
 	}
 	
-	public static void main (String[] args) {
-		UDPClient cl = new UDPClient("10.2.255.255") ; // Louis a mis 255.255.255.255
-		//UDPClient cl = new UDPClient("localhost") ;
-		String ret = cl.send("Salut c'est Andréa") ;
-		System.out.println(ret) ;
-	}
+	/*public String send (String msg) {
+		null;
+		
+	} */
+	
 		
 }

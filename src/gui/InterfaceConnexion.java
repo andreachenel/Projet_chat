@@ -13,7 +13,7 @@ public class InterfaceConnexion {
 	public JTextField idField, pwdField, pseudoField ;
 	JButton loginButton, pseudoButton ;
 	JPanel interfacePanel;
-	JLabel connectedMessage, enterId, enterPwd, errorMessage, validPseudoMessage, invalidPseudoMessage ;
+	JLabel connectedMessage, enterId, enterPwd, errorMessage, pseudoMessage ;
 	
 	
 	public InterfaceConnexion() {
@@ -25,12 +25,11 @@ public class InterfaceConnexion {
 		 errorMessage = new JLabel(); 
 		 enterId  = new JLabel("Identifiant");
 		 enterPwd  = new JLabel("Mot de passe");
-		 validPseudoMessage = new JLabel();
-		 invalidPseudoMessage = new JLabel();
+		 pseudoMessage = new JLabel();
 		 
 		 
 		 //Create the panel
-		 interfacePanel = new JPanel(null); //,BoxLayout.X_AXIS
+		 interfacePanel = new JPanel(null); 
 		 
 		 loginButton = new JButton (new AbstractAction("Log in") {
 			private static final long serialVersionUID = 1L;
@@ -44,14 +43,13 @@ public class InterfaceConnexion {
 					connectedMessage.setText("");
 					boolean eq=false;
 					try {
-						// eq = pwd.equals(mytab[Integer.parseInt(log)]);
 						eq = DatabaseManager.verifyLogin(log, pwd) ;
 					} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-						// TODO Auto-generated catch block
 						errorMessage.setText("Erreur, identifiant ou mot de passe incorrect");
 					} 
 					
-					if (eq) {
+					if (eq) //L'ID et le mot de passe concordent
+					{
 						loginButton.setText("CONNECTED");
 						connectedMessage.setText("Connexion réussie ! choisissez un pseudonyme :");
 						interfacePanel.add(pseudoField);
@@ -59,7 +57,6 @@ public class InterfaceConnexion {
 						
 						
 					} else {
-						// System.out.println("Erreur mot de passe," + log + pwd);
 						errorMessage.setText("Erreur, identifiant ou mot de passe incorrect");	
 						loginButton.setText("Not connected");
 					}
@@ -76,20 +73,18 @@ public class InterfaceConnexion {
 
 					 interfacePanel.add(pseudoButton);	
 					
-					if (/*le pseudo est valide*/ true) {
-						interfacePanel.add(validPseudoMessage);
-						validPseudoMessage.setText("Pseudo ok");	
-						pseudoButton.setText("Pseudo valide");
-						
+					if ( pseudo.equals("c")) /*le pseudo est valide*/
+					{
+						pseudoMessage.setText("Pseudo ok");	
+						pseudoButton.setText("Pseudo valide");						
 						
 					} else {
-						System.out.println("Mauvais pseudo,");
-						 interfacePanel.add(invalidPseudoMessage);	
-
-						 invalidPseudoMessage.setText("Pseudo indisponible");	
-						 pseudoButton.setText("Pseudo invalide");
+						pseudoMessage.setText("Pseudo indisponible");	
+						pseudoButton.setText("Pseudo invalide");
 					}
 					 interfaceFrame.setVisible(true);
+					 interfaceFrame.revalidate() ;
+					 interfaceFrame.repaint() ;
 				}
 		 }) ;
 		 
@@ -99,17 +94,12 @@ public class InterfaceConnexion {
 		 idField.setBounds(180,50,150,20);
 		 pwdField.setBounds(180,100,150,20);
 		 loginButton.setBounds(180,150,150,20);
-		 //pseudoButton.setBounds(180,350,150,20);
 		 pseudoField.setBounds(180,250,150,20);
-		 //pwdField.setBounds(180,300,150,20);
 		 connectedMessage.setBounds(350,150,500,30);
 		 errorMessage.setBounds(350,150,500,30);
-		 validPseudoMessage.setBounds(350,300,150,20);
-		 invalidPseudoMessage.setBounds(350,300,150,20);
+		 pseudoMessage.setBounds(350,300,150,20);
 		 pseudoField.setBounds(180,250,150,20);
-		 pseudoButton.setBounds(180,300,150,20);
-		 
-		 
+		 pseudoButton.setBounds(180,300,150,20);		 
 		 
 		 //Add to the Panel
 		 interfacePanel.add(idField);
@@ -119,15 +109,13 @@ public class InterfaceConnexion {
 		 interfacePanel.add(loginButton);	
 		 interfacePanel.add(connectedMessage);
 		 interfacePanel.add(errorMessage);
-		 	 
-		 
+		 interfacePanel.add(pseudoMessage);
+			
 		 interfaceFrame.getContentPane().add(interfacePanel, BorderLayout.CENTER);
 		 
 		 //Display the window
 		 interfaceFrame.pack();
-		 interfaceFrame.setSize(800,400) ;
-		 //interfaceFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		 
+		 interfaceFrame.setSize(800,400) ;	 
 	}
 	
 	public void run () {
