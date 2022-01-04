@@ -6,7 +6,7 @@ import network.NetworkManager;
 
 public class UserManager {
 
-	static ArrayList<User> UserTab =new ArrayList<>() ;
+	static ArrayList<User> UserTab =new ArrayList<User>() ;
 
 	public UserManager(String myPseudo, int myPort) {
 		UserTab = new ArrayList <User>();
@@ -17,24 +17,24 @@ public class UserManager {
 	}
 
 	public static User findMe () {
-		return UserTab.get(0) ;
+		return getUserTab().get(0) ;
 	}
 
 	public static void addUser (String pseudo, String addr, int port) {
-		UserTab.add(new User(pseudo, addr, port));
+		getUserTab().add(new User(pseudo, addr, port));
 	}
 
 	public static void removeUserByPseudo (String pseudo) {
 		int index = findUser(pseudo) ;
-		UserTab.remove(index);
+		getUserTab().remove(index);
 	}
 
 	public static void remove(int index) {
-		UserTab.remove(index);
+		getUserTab().remove(index);
 	}
 
 	public static void setUserAt(int index, User us) {
-		UserTab.set(index, us) ;
+		getUserTab().set(index, us) ;
 	}
 
 	public static int findUser (String pseudo) {
@@ -42,8 +42,8 @@ public class UserManager {
 
 		int i=0 ;
 		boolean found = false ;
-		while (!found && i<UserTab.size()) {
-			if (pseudo.equals(UserTab.get(i).pseudo)) {
+		while (!found && i<getUserTab().size()) {
+			if (pseudo.equals(getUserTab().get(i).pseudo)) {
 				result = i ;
 				found= true ;
 			}
@@ -58,8 +58,8 @@ public class UserManager {
 
 		int i=0 ;
 		boolean found = false ;
-		while (!found && i<UserTab.size()) {
-			if (address.equals(UserTab.get(i).addrIp)) {
+		while (!found && i<getUserTab().size()) {
+			if (address.equals(getUserTab().get(i).addrIp)) {
 				result = i ;
 				found= true ;
 			}
@@ -70,20 +70,26 @@ public class UserManager {
 	}
 
 	public static User userAt (int i) {
-		return UserTab.get(i) ;
+		return getUserTab().get(i) ;
+	}
+	public static int getLength() {
+		return getUserTab().size();
 	}
 
 	public static void printUserTab () {
 		System.out.print("- - UserTab : ") ;
-		for (int i = 0; i < UserTab.size();i++) 
+		for (int i = 0; i < getUserTab().size();i++) 
 		{ 		      
-			System.out.print(UserTab.get(i).pseudo+" "); 		
+			System.out.print(getUserTab().get(i).pseudo+" "); 		
 		} 
 		System.out.println() ;
 	}
 	public static void changePort(String pseudo, int port) {
 		int index = findUser(pseudo) ;
 		UserTab.get(index).port=port ;
+	}
+	public static ArrayList<User> getUserTab() {
+		return UserTab;
 	}
 
 }
