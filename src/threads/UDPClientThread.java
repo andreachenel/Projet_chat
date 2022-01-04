@@ -15,9 +15,9 @@ public class UDPClientThread extends Thread {
 	Object message ;
 
 
-	public UDPClientThread (String addr, Object msg, int p) {
+	public UDPClientThread (Object msg, String addr, int port) {
 		message = msg ;
-		port = p ;
+		this.port = port ;
 
 		try {
 			socket = new DatagramSocket() ;
@@ -28,7 +28,6 @@ public class UDPClientThread extends Thread {
 	}
 
 	public void run () {
-
 		// Convertir l'object en byte pour l'envoyer
 		ByteArrayOutputStream b = new ByteArrayOutputStream();
 		ObjectOutputStream in;

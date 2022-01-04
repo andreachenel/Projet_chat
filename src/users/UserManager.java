@@ -81,5 +81,9 @@ public class UserManager {
 		} 
 		System.out.println() ;
 	}
+	public static void changePort(String pseudo, int port) {
+		int index = findUser(pseudo) ;
+		UserTab.get(index).port=port ;
+	}
 
 }

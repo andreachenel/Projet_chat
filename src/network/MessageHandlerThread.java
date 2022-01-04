@@ -24,21 +24,19 @@ public class MessageHandlerThread extends Thread {
 				msg.setType(MessageType.AUTHORIZEPSEUDO);
 			} else  {
 				msg.setType(MessageType.DENYPSEUDO);
-
 			}
-
-			UDPClientThread client = new UDPClientThread(us.addrIp,msg,us.port);
+			UDPClientThread client = new UDPClientThread(msg, us.addrIp,NetworkManager.UDPRequestPort);
 			client.start();
 			break;
 
 		case AUTHORIZEPSEUDO :
-			System.out.println("												<- Pseudo OK du cote de " + us.pseudo);
+			System.out.println("					<- Pseudo OK du cote de " + us.pseudo);
 
 			NetworkManager.receiveOk=true;
 			break;
 
 		case DENYPSEUDO :
-			System.out.println("												<- C'est non");
+			System.out.println("					<- C'est non");
 
 			NetworkManager.pseudoOk=false;
 			break;
@@ -56,8 +54,10 @@ public class MessageHandlerThread extends Thread {
 			UserManager.addUser(us.pseudo, us.addrIp, us.port);
 			System.out.println("Added user : " + us.pseudo) ;
 			break;
-
-
+//		case TCPREQUEST :
+//			System.out.println("TCP Request received") ;
+//			UserManager.changePort(us.pseudo, us.port) ;
+//			break ;
 		}
 	}
 }

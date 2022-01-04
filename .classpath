@@ -14,17 +14,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="main/java/|test/java/" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/chenel/4A/COO/Projet_chat/mysql-connector.jar"/>
-	<classpathentry exported="true" kind="lib" path="U:/4A/COO/Projet_chat/mysql-connector.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/GitHub/Projet_chat/mysql-connector.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

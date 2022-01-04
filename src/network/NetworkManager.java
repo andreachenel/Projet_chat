@@ -6,7 +6,8 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
 
-import threads.* ;
+import threads.UDPClientThread;
+import threads.UDPListenThread;
 import users.User;
 import users.UserManager;
 
@@ -14,8 +15,10 @@ public class NetworkManager {
 
 	public static boolean receiveOk = false;
 	public static boolean pseudoOk = true;
-	public static int portEnvoi = 2000 ;
-	public static int portRecep = 1234 ;
+	public static int TCPListenPort = 2002 ;
+	public static int TCPPort = 2003 ;
+	public static int UDPListenPort = 2000 ;
+	public static int UDPRequestPort = 2001 ;
 
 	// returns local IP address
 	public static String getLocalAddress () {
@@ -32,28 +35,19 @@ public class NetworkManager {
 		return addr.getHostAddress() ;
 	}
 
-	public static void setPorts(int portE, int portR) {
-		portEnvoi = portE ;
-		portRecep = portR ;
-	}
-
-	public static void setPorts(int portR) {
-		portRecep = portR ;
-	}
-
-	public static int requestPseudo(String pseudo, int portEnvoi, int portRecep) {
+	public static int requestPseudo(String pseudo) {
 
 		System.out.println("	-> Requesting pseudo "+pseudo) ;
 
 		// Listen to answers
-		UDPListenThread listener = new UDPListenThread(portRecep);
+		UDPListenThread listener = new UDPListenThread(UDPRequestPort);
 		listener.start() ;
 
 		// Request pseudo by broadcasting
-		User us = new User(pseudo,NetworkManager.getLocalAddress(),portRecep) ;
+		User us = new User(pseudo,NetworkManager.getLocalAddress(),TCPPort) ;
 		Message requestMessage = new Message(MessageType.REQUESTPSEUDO, us);
 
-		UDPClientThread requestClient = new UDPClientThread("255.255.255.255",requestMessage,portEnvoi);
+		UDPClientThread requestClient = new UDPClientThread(requestMessage,"255.255.255.255",UDPListenPort);
 		requestClient.start();
 		try {
 			TimeUnit.SECONDS.sleep(2);
@@ -67,9 +61,9 @@ public class NetworkManager {
 		if (receiveOk && pseudoOk) {
 			System.out.println("	-> Confirming pseudo "+pseudo);
 			Message confirmMessage = new Message(MessageType.CONFIRMPSEUDO, us);
-			UDPClientThread confirmClient = new UDPClientThread("255.255.255.255",confirmMessage,portEnvoi);
+			UDPClientThread confirmClient = new UDPClientThread(confirmMessage, "255.255.255.255",UDPListenPort);
 			confirmClient.start();
-			UserManager.addUser("Chat",NetworkManager.getLocalAddress(),portRecep) ;
+			UserManager.addUser("Chat",NetworkManager.getLocalAddress(),TCPListenPort) ;
 			return 0 ;
 
 		} else {
@@ -77,4 +71,5 @@ public class NetworkManager {
 			return -1 ;
 		}
 	}
+
 }

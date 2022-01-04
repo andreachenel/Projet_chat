@@ -75,8 +75,7 @@ public class InterfaceConnexion {
 				interfacePanel.add(pseudoButton);	
 
 				/* if le pseudo est valide */
-				NetworkManager.setPorts(2030, 1352);
-				if ((NetworkManager.requestPseudo(pseudo, NetworkManager.portEnvoi , NetworkManager.portRecep))==0)
+				if ((NetworkManager.requestPseudo(pseudo))==0)
 				{
 					pseudoMessage.setText("Pseudo ok");	
 					pseudoButton.setText("Pseudo valide");	
