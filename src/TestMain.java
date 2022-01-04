@@ -1,35 +1,31 @@
-import java.sql.SQLException;
 import bdd.DatabaseManager;
-import gui.InterfaceConnexion;
-import threads.UDPClientThread;
-import network.UserManager;
 import network.NetworkManager;
-import network.User;
 import threads.UDPListenThread;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import users.UserManager;
 
 public class TestMain {
 	public static void main (String[] args) {
+
+		DatabaseManager DBM = new DatabaseManager() ;
+		DBM.create() ;
+
+		NetworkManager.setPorts(2030, 1352);
+
+		int portRecep = NetworkManager.portEnvoi ;
 		
-		int portRecep = 2010 ;
-		UserManager usrmanager = new UserManager("TestBot", portRecep) ;
+		UserManager.addUser("TestBot", NetworkManager.getLocalAddress(),portRecep) ;
+		UserManager.printUserTab() ;
 		
+		// open UDP listener to handle new users & pseudo change requests
 		UDPListenThread list = new UDPListenThread(portRecep);
 		list.start() ;
-		
-		
-		
-		
-		
+
 		/*	UDPClient cl = new UDPClient("255.255.255.255") ; // 10.2.255.255
 		//UDPClient cl = new UDPClient("localhost") ;
 		String ret = cl.broadcast("Salut c'est Andréa") ;
 		System.out.println(ret) ; */
-		
+
 		//DBM.close();
-		
-		//A faire : éviter superposition "pseudo indisponible"/"dispo"
+
 	}	
 }

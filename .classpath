@@ -24,6 +24,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/chenel/4A/COO/Projet_chat/sqlite-jdbc-3.36.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/chenel/4A/COO/Projet_chat/mysql-connector.jar"/>
+	<classpathentry exported="true" kind="lib" path="U:/4A/COO/Projet_chat/mysql-connector.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
