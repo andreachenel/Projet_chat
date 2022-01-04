@@ -6,12 +6,13 @@ import network.NetworkManager;
 
 public class UserManager {
 
-	static ArrayList<User> UserTab =new ArrayList<User>() ;
+	private static ArrayList<User> UserTab =new ArrayList<User>() ;
 
 	public UserManager(String myPseudo, int myPort) {
 		UserTab = new ArrayList <User>();
 		addUser(myPseudo, NetworkManager.getLocalAddress(), myPort);
 	}
+
 	public UserManager() {
 		UserTab = new ArrayList <User>();
 	}
@@ -24,12 +25,12 @@ public class UserManager {
 		getUserTab().add(new User(pseudo, addr, port));
 	}
 
-	public static void removeUserByPseudo (String pseudo) {
-		int index = findUser(pseudo) ;
+	public static void remove(int index) {
 		getUserTab().remove(index);
 	}
 
-	public static void remove(int index) {
+	public static void removeUserByPseudo (String pseudo) {
+		int index = findUser(pseudo) ;
 		getUserTab().remove(index);
 	}
 
@@ -72,7 +73,8 @@ public class UserManager {
 	public static User userAt (int i) {
 		return getUserTab().get(i) ;
 	}
-	public static int getLength() {
+
+	public static int length() {
 		return getUserTab().size();
 	}
 
@@ -84,10 +86,12 @@ public class UserManager {
 		} 
 		System.out.println() ;
 	}
+
 	public static void changePort(String pseudo, int port) {
 		int index = findUser(pseudo) ;
 		UserTab.get(index).port=port ;
 	}
+	
 	public static ArrayList<User> getUserTab() {
 		return UserTab;
 	}

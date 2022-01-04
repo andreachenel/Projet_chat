@@ -5,7 +5,7 @@ import users.User;
 import users.UserManager;
 
 public class MessageHandlerThread extends Thread {
-	Message received ;
+	private Message received ;
 
 	public MessageHandlerThread (Message m) {
 		received = m ;
@@ -36,7 +36,7 @@ public class MessageHandlerThread extends Thread {
 			break;
 
 		case DENYPSEUDO :
-			System.out.println("					<- C'est non");
+			System.out.println("					<- C'est non - "+us.pseudo);
 
 			NetworkManager.pseudoOk=false;
 			break;
@@ -54,10 +54,7 @@ public class MessageHandlerThread extends Thread {
 			UserManager.addUser(us.pseudo, us.addrIp, us.port);
 			System.out.println("Added user : " + us.pseudo) ;
 			break;
-//		case TCPREQUEST :
-//			System.out.println("TCP Request received") ;
-//			UserManager.changePort(us.pseudo, us.port) ;
-//			break ;
+
 		}
 	}
 }

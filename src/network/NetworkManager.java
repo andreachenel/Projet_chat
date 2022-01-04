@@ -15,10 +15,12 @@ public class NetworkManager {
 
 	public static boolean receiveOk = false;
 	public static boolean pseudoOk = true;
-	public static int TCPListenPort = 2002 ;
-	public static int TCPPort = 2003 ;
+	
+	// Useful ports for UDP & TCP communication
 	public static int UDPListenPort = 2000 ;
 	public static int UDPRequestPort = 2001 ;
+	public static int TCPListenPort = 2002 ;
+	public static int TCPPort = 2003 ;
 
 	// returns local IP address
 	public static String getLocalAddress () {

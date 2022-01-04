@@ -4,25 +4,34 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import network.NetworkManager;
 
 public class ThreadManager {
-	boolean TCPServerRunning = true ;
-	HashMap<InetAddress,TCPThread> openTCPConnections = new HashMap<>() ;
+	private boolean TCPServerRunning = true ;
+	private HashMap<InetAddress,TCPThread> openTCPConnections = new HashMap<>() ;
 
-	public void send(InetAddress addr,String message) {
-		if (openTCPConnections.containsKey(addr)) {
-			openTCPConnections.get(addr).send(message);
+	public void send(String addr,String message) {
+		InetAddress a = null ;
+		try {
+			a = InetAddress.getByName(addr);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		if (a!= null && openTCPConnections.containsKey(a)) {
+			openTCPConnections.get(a).send(message);
 		} else {
-			System.out.println("Error ThreadManager send : no TCP connection found with "+addr.toString());
+			System.out.println("Error ThreadManager send : no TCP connection found with "+addr);
+			this.initiateTCP(addr);
+			openTCPConnections.get(a).send(message);
 		}
 	}
-	
+
 	public ThreadManager () {
 	}
-	
+
 	public void printTCPConnections () {
 		System.out.println("TCP Connections : ");
 		for (InetAddress i : openTCPConnections.keySet()) {
@@ -32,7 +41,7 @@ public class ThreadManager {
 
 	public void initiateTCP(String addr) {
 		int port = NetworkManager.TCPPort+10 ;
-		System.out.println("Initiating TCP client at port "+Integer.toString(port));
+		System.out.println("Initiating TCP client at port "+Integer.toString(port) + " for address "+addr);
 		NetworkManager.TCPPort+=1 ;
 		try {
 			// create a socket from - here:TCPPort - to - addr:TCPListenPort to request TCP
@@ -40,7 +49,7 @@ public class ThreadManager {
 			request.close();
 			// receive answer as a TCP request from addr:addr.TCPPort to here:TCPPort
 			ServerSocket sock = new ServerSocket(port) ;
-			
+
 			// delegate to a TCP Thread
 			TCPThread t = new TCPThread(sock.accept());
 			t.start();
@@ -51,7 +60,7 @@ public class ThreadManager {
 			e.printStackTrace();
 		}		
 	}
-	
+
 	// Opens a TCP Server who distributes incoming connection requests by creating TCPThreads
 	public void openTCPServer () {
 		ServerSocket serverSocket;
@@ -63,10 +72,10 @@ public class ThreadManager {
 				int remotePort= receiver.getPort();
 				InetAddress remoteAddress= receiver.getInetAddress() ;
 				receiver.close();
-				
+
 				int localPort = NetworkManager.TCPPort ;
 				NetworkManager.TCPPort+=1 ;
-				
+
 				System.out.println("Opening TCP client at port "+Integer.toString(localPort));
 				Socket newSocket = new Socket(remoteAddress,remotePort ,InetAddress.getByName(NetworkManager.getLocalAddress()),localPort) ;
 				TCPThread t = new TCPThread(newSocket) ;
@@ -78,7 +87,7 @@ public class ThreadManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void closeTCPServer() {
 		this.TCPServerRunning=false ;
 	}

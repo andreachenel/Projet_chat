@@ -5,13 +5,11 @@ import java.io.PrintStream;
 import java.net.Socket;
 
 public class TCPThread extends Thread {
-	int threadID ;
-	int port ;
-	
-	Socket socket ;
-	String in = "" ;
-	String out = "" ;
-	boolean running = true ;
+
+	private Socket socket ;
+	private String in = "" ;
+	private String out = "" ;
+	private boolean running = true ;
 
 	// Threads are created by ThreadManager with a socket
 	public TCPThread (Socket socket) {
@@ -27,7 +25,7 @@ public class TCPThread extends Thread {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			PrintStream printer = new PrintStream(socket.getOutputStream());
-		
+
 			while (running) {
 				// read if there is something to read
 				if (reader.ready()) {
