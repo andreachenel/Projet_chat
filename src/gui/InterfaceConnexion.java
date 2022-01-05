@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import network.*;
-
+import users.UserManager;
 import bdd.DatabaseManager;
 
 public class InterfaceConnexion {
@@ -48,7 +48,8 @@ public class InterfaceConnexion {
 				} 
 
 				if (eq) //L'ID et le mot de passe concordent
-				{
+				{	
+					UserManager.setMyID(log);
 					loginButton.setText("CONNECTED");
 					connectedMessage.setText("Connexion réussie ! choisissez un pseudonyme :");
 					interfacePanel.add(pseudoField);
@@ -80,6 +81,7 @@ public class InterfaceConnexion {
 					pseudoMessage.setText("Pseudo ok");	
 					pseudoButton.setText("Pseudo valide");	
 					pseudoButton.setEnabled(false);
+					DatabaseManager.changePseudo(pseudo) ;
 
 				} else {
 					pseudoMessage.setText("Pseudo indisponible");	

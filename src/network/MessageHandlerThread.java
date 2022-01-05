@@ -31,13 +31,13 @@ public class MessageHandlerThread extends Thread {
 
 		case AUTHORIZEPSEUDO :
 			System.out.println("					<- Pseudo OK du cote de " + us.pseudo);
-
+			UserManager.addUser(us) ;
 			NetworkManager.receiveOk=true;
 			break;
 
 		case DENYPSEUDO :
 			System.out.println("					<- C'est non - "+us.pseudo);
-
+			UserManager.addUser(us) ;
 			NetworkManager.pseudoOk=false;
 			break;
 
