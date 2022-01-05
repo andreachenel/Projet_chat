@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import users.*;
 //import javax.*;
@@ -26,18 +28,17 @@ public class InterfaceDiscussion {
 		usrCh = new JLabel ("User Choosen");
 		done = new JButton("Done");
 		
-		usersToChoose = (String[]) UserManager.getUserTab().toArray();
+	//	usersToChoose = (String[]) UserManager.getUserTab().toArray();
+			
+		ArrayList<String> pseudoTab =new ArrayList<String>() ;
+		for (User u : UserManager.getUserTab() ) {
+			pseudoTab.add(u.pseudo);
+			}
 		
-//		for (User u : UserManager.UserTab ) {
-//			usersToChoose.add(u.pseudo);
-//			}
-		
-		//arrayList de pseudos et après j'en fais un tableau 
+		usersToChoose = pseudoTab.toArray(new String[pseudoTab.size()]);
+
 
 		usrComboBox = new JComboBox<String>(usersToChoose);
-        
-		
-       
         done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedUser = "You selected " + usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
