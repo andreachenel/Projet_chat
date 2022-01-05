@@ -5,7 +5,6 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import users.*;
-//import javax.*;
 
 public class InterfaceDiscussion {
 	JFrame interfaceFrame;

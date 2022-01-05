@@ -1,9 +1,7 @@
 package bdd;
 
 import java.sql.*;
-
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
-
 import users.UserManager;
 
 public class DatabaseManager {

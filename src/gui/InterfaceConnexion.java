@@ -3,7 +3,6 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-
 import javax.swing.*;
 import network.*;
 import users.UserManager;
@@ -117,6 +116,9 @@ public class InterfaceConnexion {
 
 		//Add to the Panel
 		interfacePanel.add(idField);
+		
+		InterfaceDiscussion disc = new InterfaceDiscussion();
+		disc.run();
 		interfacePanel.add(pwdField);
 		interfacePanel.add(enterId); ;
 		interfaceFrame.repaint() ;
@@ -136,8 +138,7 @@ public class InterfaceConnexion {
 	public void run () {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		interfaceFrame.setVisible(true);
-		while (running) {
-		}
+	
 	}
 
 	public JTextField getidField () {

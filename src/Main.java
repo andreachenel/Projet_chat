@@ -1,14 +1,5 @@
 import java.sql.SQLException;
-
-
-import bdd.DatabaseManager;
-import gui.InterfaceConnexion;
-import network.NetworkManager;
-import threads.ThreadManager;
-import threads.UDPListenThread;
-
 import users.UserManager;
-
 import network.*;
 import threads.*;
 import gui.*;
@@ -20,23 +11,24 @@ public class Main {
 
 		InterfaceConnexion connex = new InterfaceConnexion();
 		connex.run();
-
-		//InterfaceDiscussion disc = new InterfaceDiscussion();
-		//disc.run();
-		UserManager.setMyID("1");
 		
-		DatabaseManager DBM = new DatabaseManager() ;
-		DBM.create() ;
+		InterfaceDiscussion disc = new InterfaceDiscussion();
+		disc.run();
+//		
+//		UserManager.setMyID("1");
+//		
+//		DatabaseManager DBM = new DatabaseManager() ;
+//		DBM.create() ;
 		/*int connected = -1 ;
 		
 		while (connected==-1) {
 			connected = NetworkManager.requestPseudo("Pierre") ;
 		}*/
 		
-		DatabaseManager.changePseudo("Pierre") ;
-		DBM.printLoginTable();
-		
-		UserManager.printUserTab();
+//		DatabaseManager.changePseudo("Pierre") ;
+//		DBM.printLoginTable();
+//		
+//		UserManager.printUserTab();
 		
 		/*UDPListenThread lt = new UDPListenThread(NetworkManager.UDPListenPort) ;
 		lt.start();

@@ -1,7 +1,6 @@
 package users;
 
 import java.util.ArrayList;
-
 import network.NetworkManager;
 
 public class UserManager {

@@ -1,7 +1,6 @@
 import bdd.DatabaseManager;
 import network.NetworkManager;
-import threads.ThreadManager;
-import threads.UDPListenThread;
+import threads.*;
 import users.UserManager;
 
 public class TestMain {
