@@ -16,7 +16,17 @@ public class UserManager {
 			}
 		return pseudoTab;
 	}
+
+	private static String myID ;
+
 	
+	public static String getMyID() {
+		return myID;
+	}
+
+	public static void setMyID(String myID) {
+		UserManager.myID = myID;
+	}
 
 	public UserManager(String myPseudo, int myPort) {
 		UserTab = new ArrayList <User>();

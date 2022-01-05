@@ -1,5 +1,12 @@
 import java.sql.SQLException;
 
+
+import bdd.DatabaseManager;
+import gui.InterfaceConnexion;
+import network.NetworkManager;
+import threads.ThreadManager;
+import threads.UDPListenThread;
+
 import users.UserManager;
 
 import network.*;
@@ -10,15 +17,33 @@ import bdd.*;
 public class Main {
 	public static void main (String[] args) throws ClassNotFoundException, SQLException {
 
-		
-
-		DatabaseManager DBM = new DatabaseManager() ;
-		DBM.create() ;	
 
 		InterfaceConnexion connex = new InterfaceConnexion();
 		connex.run();
 
+		//InterfaceDiscussion disc = new InterfaceDiscussion();
+		//disc.run();
+		UserManager.setMyID("1");
+		
+		DatabaseManager DBM = new DatabaseManager() ;
+		DBM.create() ;
+		/*int connected = -1 ;
+		
+		while (connected==-1) {
+			connected = NetworkManager.requestPseudo("Pierre") ;
+		}*/
+		
+		DatabaseManager.changePseudo("Pierre") ;
+		DBM.printLoginTable();
+		
+		UserManager.printUserTab();
+		
+		/*UDPListenThread lt = new UDPListenThread(NetworkManager.UDPListenPort) ;
+		lt.start();
+>>>>>>> refs/remotes/origin/main
+
 		InterfaceDiscussion disc = new InterfaceDiscussion();
+<<<<<<< HEAD
 		disc.run();
 	       
 //	
@@ -39,6 +64,9 @@ public class Main {
 		
 //		InterfaceDiscussion disc = new InterfaceDiscussion();
 //		disc.run();
+=======
+		disc.run();*/
+
 		
 //		System.out.println(NetworkManager.getLocalAddress());
 //		
