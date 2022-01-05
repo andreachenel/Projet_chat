@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import network.NetworkManager;
 
-public class ThreadManager {
+public class ThreadManager extends Thread {
 	private boolean TCPServerRunning = true ;
 	private HashMap<InetAddress,TCPThread> openTCPConnections = new HashMap<>() ;
 
@@ -40,14 +40,17 @@ public class ThreadManager {
 	}
 
 	public void initiateTCP(String addr) {
-		int port = NetworkManager.TCPPort+10 ;
+		int port = NetworkManager.TCPPort ;
 		System.out.println("Initiating TCP client at port "+Integer.toString(port) + " for address "+addr);
-		NetworkManager.TCPPort+=1 ;
+		NetworkManager.TCPPort+=2 ;
 		try {
 			// create a socket from - here:TCPPort - to - addr:TCPListenPort to request TCP
+			System.out.println("	Opening request socket at port "+Integer.toString(port));
 			Socket request = new Socket(InetAddress.getByName(addr),NetworkManager.TCPListenPort, InetAddress.getByName(NetworkManager.getLocalAddress()),port) ;
 			request.close();
+			port+=1 ;
 			// receive answer as a TCP request from addr:addr.TCPPort to here:TCPPort
+			System.out.println("	Opening server socket at port "+Integer.toString(port));
 			ServerSocket sock = new ServerSocket(port) ;
 
 			// delegate to a TCP Thread
@@ -62,7 +65,7 @@ public class ThreadManager {
 	}
 
 	// Opens a TCP Server who distributes incoming connection requests by creating TCPThreads
-	public void openTCPServer () {
+	public void run () {
 		ServerSocket serverSocket;
 		try {
 			serverSocket = new ServerSocket(NetworkManager.TCPListenPort);

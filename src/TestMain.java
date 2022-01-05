@@ -21,7 +21,7 @@ public class TestMain {
 
 		// open TCP Server to handle conversation requests
 		ThreadManager threadManager = new ThreadManager () ;
-		threadManager.openTCPServer();
+		threadManager.start();
 
 
 		//DBM.close();
