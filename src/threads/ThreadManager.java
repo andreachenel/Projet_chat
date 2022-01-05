@@ -69,14 +69,14 @@ public class ThreadManager {
 			System.out.printf("Opening TCP server at port %d\n",NetworkManager.TCPListenPort);
 			while (TCPServerRunning) {
 				Socket receiver = serverSocket.accept();
-				int remotePort= receiver.getPort();
+				int remotePort= receiver.getPort()+1;
 				InetAddress remoteAddress= receiver.getInetAddress() ;
 				receiver.close();
 
 				int localPort = NetworkManager.TCPPort ;
 				NetworkManager.TCPPort+=1 ;
 
-				System.out.println("Opening TCP client at port "+Integer.toString(localPort));
+				System.out.println("received connect request, Opening TCP client at port "+Integer.toString(localPort)+" to address "+remoteAddress.getHostAddress()+" at port"+Integer.toString(remotePort));
 				Socket newSocket = new Socket(remoteAddress,remotePort ,InetAddress.getByName(NetworkManager.getLocalAddress()),localPort) ;
 				TCPThread t = new TCPThread(newSocket) ;
 				t.start();
