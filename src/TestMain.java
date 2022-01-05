@@ -12,7 +12,7 @@ public class TestMain {
 
 		int portRecep = NetworkManager.UDPListenPort ;
 
-		UserManager.addUser("TestBot", NetworkManager.getLocalAddress(),portRecep) ;
+		UserManager.insertUserAt(0,"TestBot", NetworkManager.getLocalAddress(),portRecep) ;
 		UserManager.printUserTab() ;
 
 		// open UDP listener to handle new users & pseudo change requests

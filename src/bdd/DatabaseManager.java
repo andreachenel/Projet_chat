@@ -19,6 +19,7 @@ public class DatabaseManager {
 				// iterate & read the result set
 				System.out.println("	id = " + resultSet.getString("id"));
 				System.out.println("	password = " + resultSet.getString("password"));
+				System.out.println("	pseudo = " + resultSet.getString("pseudo"));
 			}
 			statement.close();
 		} catch (SQLException e){
@@ -50,10 +51,11 @@ public class DatabaseManager {
 				statement.setQueryTimeout(5);  // set timeout to  5sec.
 
 				statement.executeUpdate("DROP TABLE IF EXISTS login");
-				statement.executeUpdate("CREATE TABLE login (id varchar(100), password varchar(100))");
+				statement.executeUpdate("CREATE TABLE login (id varchar(100), password varchar(100), pseudo varchar(100))");
 
 				String ids [] = {"1","2","3","4","5"};
 				String passwords [] = {"haha","hoho","hehe","hihi","James Bond"};
+				String pseudos [];
 
 				for(int i=0;i<ids.length;i++){
 					statement.executeUpdate("INSERT INTO login values(' "+ids[i]+"', '"+passwords[i]+"')");   
@@ -95,7 +97,14 @@ public class DatabaseManager {
 		} catch (SQLException e) {
 			System.err.println(e);
 		} 
-
+		
 		return result;
 	}
+
+	public static boolean checkID(String ID) {
+		
+		
+		return false;
+	}
+
 }

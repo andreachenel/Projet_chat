@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import users.*;
@@ -59,7 +58,7 @@ public class InterfaceDiscussion {
 
 		//Add to the panel 
 		panel.add(coUsr);
-		panel.add(msg);
+		panel.add(msg);		
 		panel.add(envoi);
 		panel.add(done);
         panel.add(usrComboBox);
