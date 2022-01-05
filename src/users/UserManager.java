@@ -1,13 +1,20 @@
 package users;
 
 import java.util.ArrayList;
-
 import network.NetworkManager;
 
 public class UserManager {
 
 	private static String myID = null ;
-	private static ArrayList<User> UserTab =new ArrayList<User>() ;
+	private static ArrayList<User> UserTab =new ArrayList<User>() ;	
+	
+	public static ArrayList<String> pseudoTab() {
+		ArrayList<String> pseudoTab = new ArrayList<String>() ;
+		for (User u : UserTab ) {
+			pseudoTab.add(u.getPseudo());
+			}
+		return pseudoTab;
+	}
 	
 	public static String getMyID() {
 		return myID;
@@ -90,6 +97,7 @@ public class UserManager {
 
 		return result;
 	}
+	
 
 	public static User userAt (int i) {
 		return UserTab.get(i) ;

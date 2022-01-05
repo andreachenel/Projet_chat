@@ -1,9 +1,7 @@
 package bdd;
 
 import java.sql.*;
-
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
-
 import users.UserManager;
 
 public class DatabaseManager {
@@ -21,6 +19,7 @@ public class DatabaseManager {
 				// iterate & read the result set
 				System.out.println("	id = " + resultSet.getString("id"));
 				System.out.println("	password = " + resultSet.getString("password"));
+
 				System.out.println("	currentPseudo = " + resultSet.getString("currentPseudo"));
 			}
 			statement.close();
@@ -62,9 +61,6 @@ public class DatabaseManager {
 
 				statement = connection.createStatement();
 				statement.setQueryTimeout(5);  // set timeout to  5sec.
-
-				//statement.executeUpdate("DROP TABLE IF EXISTS login");
-				//statement.executeUpdate("CREATE TABLE login (id varchar(100), password varchar(100), currentPseudo varchar(100))");
 
 				//String ids [] = {"1","2","3","4","5"};
 				//String passwords [] = {"haha","hoho","hehe","hihi","James Bond"};
@@ -155,7 +151,7 @@ public class DatabaseManager {
 		} catch (SQLException e) {
 			System.err.println(e);
 		} 
-
+		
 		return result;
 	}
 
@@ -204,4 +200,10 @@ public class DatabaseManager {
 		}
 	}
 	
+	public static boolean checkID(String ID) {
+		
+		
+		return false;
+	}
+
 }

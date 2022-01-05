@@ -1,23 +1,14 @@
 import java.sql.SQLException;
-
-import bdd.DatabaseManager;
-import gui.InterfaceConnexion;
-import network.NetworkManager;
-import threads.ThreadManager;
-import threads.UDPListenThread;
 import users.UserManager;
-
 import network.*;
 import threads.*;
 import gui.*;
+import bdd.*;
 
 public class Main {
 	
 	
 	public static void main (String[] args) throws ClassNotFoundException, SQLException {
-
-		//InterfaceDiscussion disc = new InterfaceDiscussion();
-		//disc.run();
 		
 		DatabaseManager DBM = new DatabaseManager() ;
 		DBM.create() ;
@@ -33,24 +24,13 @@ public class Main {
 //		NetworkManager.requestPseudo("XxPierreDu31xX") ;
 //		DBM.printLoginTable();
 		DBM.printMessages();
-//		
-//		UDPListenThread lt = new UDPListenThread(NetworkManager.UDPListenPort) ;
-//		lt.start();
-//
-//		ThreadManager tm = new ThreadManager() ;
-//		tm.start();
-		
-//		tm.sendTo("TestBot","Bonsoir");
-//		tm.send("10.1.5.70"," haha");
-		
-//		System.out.println(NetworkManager.getLocalAddress());
-//		
-//		ThreadManager tm = new ThreadManager() ;
-//		tm.openTCPServer();
-//		
-		// !! initiateTCP has been modified for testing purposes (delete +10 at TM line 26)
 
-		//DBM.close();*/
+		InterfaceConnexion connex = new InterfaceConnexion();
+		connex.run();
+		
+		InterfaceDiscussion disc = new InterfaceDiscussion();
+		disc.run();
+
 
 	}	
 }

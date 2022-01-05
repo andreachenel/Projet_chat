@@ -2,11 +2,9 @@ package gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import users.*;
-//import javax.*;
 
 public class InterfaceDiscussion {
 	JFrame interfaceFrame;
@@ -15,7 +13,6 @@ public class InterfaceDiscussion {
 	JPanel panel;
 	JButton envoi, button, done;
 	JComboBox<String> usrComboBox;
-	//String[] usersToChoose = {"Jean", "Yves", "Steph", "Marie", "None of the listed"};
 	String[] usersToChoose;
 	
 
@@ -28,44 +25,39 @@ public class InterfaceDiscussion {
 		usrCh = new JLabel ("User Choosen");
 		done = new JButton("Done");
 		
-	//	usersToChoose = (String[]) UserManager.getUserTab().toArray();
-			
-		ArrayList<String> pseudoTab =new ArrayList<String>() ;
-		for (User u : UserManager.getUserTab() ) {
-			pseudoTab.add(u.pseudo);
-			}
 		
-		usersToChoose = pseudoTab.toArray(new String[pseudoTab.size()]);
-
+		
+		
+		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 
 		usrComboBox = new JComboBox<String>(usersToChoose);
+		
         done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedUser = "You selected " + usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
                 panel.add(usrCh);
                 usrCh.setText(selectedUser);
-                
+
             }
         });
     
-
+        
 		//Creates the panel
 		panel = new JPanel(null);
-		
 	
 
 		// Set bounds for every component
-		coUsr.setBounds(30, 10, 200, 80); //x, y, largeur, hauteur
+		coUsr.setBounds(80, 10, 200, 80); //x, y, largeur, hauteur
 		msg.setBounds(650, 480, 500, 20);
 		envoi.setBounds(1180, 480, 30, 20);
 		button.setBounds(30, 50, 200, 30);
 		usrCh.setBounds(90, 150, 400, 100);
-		usrComboBox.setBounds(80, 100, 140, 20);
-        done.setBounds(100, 130, 90, 20);
+		usrComboBox.setBounds(80, 100, 160, 30);
+        done.setBounds(120, 150, 80, 20);
 
 		//Add to the panel 
 		panel.add(coUsr);
-		panel.add(msg);
+		panel.add(msg);		
 		panel.add(envoi);
 		panel.add(done);
         panel.add(usrComboBox);

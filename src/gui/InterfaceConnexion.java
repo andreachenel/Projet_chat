@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import network.*;
 import users.UserManager;
@@ -13,6 +14,7 @@ public class InterfaceConnexion {
 	JButton loginButton, pseudoButton ;
 	JPanel interfacePanel;
 	JLabel connectedMessage, enterId, enterPwd, errorMessage, pseudoMessage ;
+	boolean running = true ;
 
 
 	public InterfaceConnexion() {
@@ -48,10 +50,11 @@ public class InterfaceConnexion {
 					System.out.println(Boolean.toString(eq));
 				} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 					errorMessage.setText("Erreur, identifiant ou mot de passe incorrect");
-				} 
+				} 		
 
-				if (eq) //L'ID et le mot de passe concordent
-				{	
+				if (/*eq*/ true) //L'ID et le mot de passe concordent
+				{
+
 					loginButton.setText("CONNECTED");
 					connectedMessage.setText("Connexion réussie ! choisissez un pseudonyme :");
 					interfacePanel.add(pseudoField);
@@ -79,21 +82,25 @@ public class InterfaceConnexion {
 				interfacePanel.add(pseudoButton);	
 
 				/* if le pseudo est valide */
-				if ((NetworkManager.requestPseudo(pseudo))==0)
+				if (/*(NetworkManager.requestPseudo(pseudo))==0*/ true)
 				{
 					pseudoMessage.setText("Pseudo ok");	
 					pseudoButton.setText("Pseudo valide");	
 					pseudoButton.setEnabled(false);
+
+					running = false;
+					interfaceFrame.dispatchEvent(new WindowEvent(interfaceFrame, WindowEvent.WINDOW_CLOSING));
 					DatabaseManager.changePseudo(pseudo) ;
 
 				} else {
 					pseudoMessage.setText("Pseudo indisponible");	
 					pseudoButton.setText("Pseudo invalide");
 				}
-				interfaceFrame.setVisible(true);
+//				interfaceFrame.setVisible(true);
 				interfaceFrame.revalidate() ;
 				interfaceFrame.repaint() ;
 			}
+
 		}) ;
 
 		// Set bounds for every component
@@ -111,8 +118,12 @@ public class InterfaceConnexion {
 
 		//Add to the Panel
 		interfacePanel.add(idField);
+		
+		InterfaceDiscussion disc = new InterfaceDiscussion();
+		disc.run();
 		interfacePanel.add(pwdField);
-		interfacePanel.add(enterId);
+		interfacePanel.add(enterId); ;
+		interfaceFrame.repaint() ;
 		interfacePanel.add(enterPwd);
 		interfacePanel.add(loginButton);	
 		interfacePanel.add(connectedMessage);
@@ -129,6 +140,7 @@ public class InterfaceConnexion {
 	public void run () {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		interfaceFrame.setVisible(true);
+	
 	}
 
 	public JTextField getidField () {
