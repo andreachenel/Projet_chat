@@ -12,35 +12,36 @@ import threads.*;
 import gui.*;
 
 public class Main {
+	
+	
 	public static void main (String[] args) throws ClassNotFoundException, SQLException {
 
 		//InterfaceDiscussion disc = new InterfaceDiscussion();
 		//disc.run();
-		UserManager.setMyID("1");
 		
 		DatabaseManager DBM = new DatabaseManager() ;
 		DBM.create() ;
-		/*int connected = -1 ;
+		String id1="TestBot2" ;
+		String id2="Pierre2" ;
+		String message="bonsoir" ;
+		String upd = "INSERT INTO messages values('"+id1+"','"+id2+"','"+message+"','1')" ;
+		DBM.retrieveMessages(id1,id2) ;
+		//InterfaceConnexion ic = new InterfaceConnexion() ;
+		//ic.run() ;
 		
-		while (connected==-1) {
-			connected = NetworkManager.requestPseudo("Pierre") ;
-		}*/
+//		DatabaseManager.verifyLogin("TestBot", "") ;
+//		NetworkManager.requestPseudo("XxPierreDu31xX") ;
+//		DBM.printLoginTable();
+		DBM.printMessages();
+//		
+//		UDPListenThread lt = new UDPListenThread(NetworkManager.UDPListenPort) ;
+//		lt.start();
+//
+//		ThreadManager tm = new ThreadManager() ;
+//		tm.start();
 		
-		DatabaseManager.changePseudo("Pierre") ;
-		DBM.printLoginTable();
-		
-		UserManager.printUserTab();
-		
-		/*UDPListenThread lt = new UDPListenThread(NetworkManager.UDPListenPort) ;
-		lt.start();
-
-		ThreadManager tm = new ThreadManager() ;
-		tm.start();
-		
-		tm.send("10.1.5.70","Bonsoir");
-		tm.send("10.1.5.70","haha");
-		InterfaceDiscussion disc = new InterfaceDiscussion();
-		disc.run();*/
+//		tm.sendTo("TestBot","Bonsoir");
+//		tm.send("10.1.5.70"," haha");
 		
 //		System.out.println(NetworkManager.getLocalAddress());
 //		
@@ -49,7 +50,7 @@ public class Main {
 //		
 		// !! initiateTCP has been modified for testing purposes (delete +10 at TM line 26)
 
-		//DBM.close();
+		//DBM.close();*/
 
 	}	
 }

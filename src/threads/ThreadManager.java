@@ -8,8 +8,10 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import network.NetworkManager;
+import users.UserManager;
 
 public class ThreadManager extends Thread {
+	
 	private boolean TCPServerRunning = true ;
 	private HashMap<InetAddress,TCPThread> openTCPConnections = new HashMap<>() ;
 
@@ -26,6 +28,13 @@ public class ThreadManager extends Thread {
 			System.out.println("Error ThreadManager send : no TCP connection found with "+addr);
 			this.initiateTCP(addr);
 			openTCPConnections.get(a).send(message);
+		}
+	}
+	
+	public void sendTo(String pseudo,String message) {
+		String addr = UserManager.userAddress(pseudo) ;
+		if (!addr.equals("")) {
+			send(addr,message) ;
 		}
 	}
 

@@ -6,7 +6,7 @@ import network.NetworkManager;
 
 public class UserManager {
 
-	private static String myID ;
+	private static String myID = null ;
 	private static ArrayList<User> UserTab =new ArrayList<User>() ;
 	
 	public static String getMyID() {
@@ -17,13 +17,17 @@ public class UserManager {
 		UserManager.myID = myID;
 	}
 
-	public UserManager(String myPseudo, int myPort) {
-		UserTab = new ArrayList <User>();
-		addUser(myPseudo, NetworkManager.getLocalAddress(), myPort);
-	}
-
 	public UserManager() {
 		UserTab = new ArrayList <User>();
+	}
+	
+	public static String userAddress (String us) {
+		int index = findUser(us) ;
+		if (index !=-1) {
+			return userAt(index).getAddrIp() ;
+		}
+		else return "" ;
+			
 	}
 
 	public static User findMe () {
@@ -31,13 +35,13 @@ public class UserManager {
 	}
 
 	public static void addUser (String pseudo, String addr, int port) {
-		if (findUser(pseudo)!=-1) {
+		if (findUser(pseudo)==-1) {
 			UserTab.add(new User(pseudo, addr, port));
 		}
 	}
 	
 	public static void addUser (User us) {
-		if (findUser(us.pseudo)!=-1) {
+		if (findUser(us.getPseudo())==-1) {
 			UserTab.add(us);
 		}
 	}
@@ -61,7 +65,7 @@ public class UserManager {
 		int i=0 ;
 		boolean found = false ;
 		while (!found && i<UserTab.size()) {
-			if (pseudo.equals(UserTab.get(i).pseudo)) {
+			if (pseudo.equals(UserTab.get(i).getPseudo())) {
 				result = i ;
 				found= true ;
 			}
@@ -77,7 +81,7 @@ public class UserManager {
 		int i=0 ;
 		boolean found = false ;
 		while (!found && i<UserTab.size()) {
-			if (address.equals(UserTab.get(i).addrIp)) {
+			if (address.equals(UserTab.get(i).getAddrIp())) {
 				result = i ;
 				found= true ;
 			}
@@ -99,14 +103,14 @@ public class UserManager {
 		System.out.print("- - UserTab : ") ;
 		for (int i = 0; i < UserTab.size();i++) 
 		{ 		      
-			System.out.print(UserTab.get(i).pseudo+" "); 		
+			System.out.print(UserTab.get(i).getPseudo()+" "); 		
 		} 
 		System.out.println() ;
 	}
 
 	public static void changePort(String pseudo, int port) {
 		int index = findUser(pseudo) ;
-		UserTab.get(index).port=port ;
+		UserTab.get(index).setPort(port);
 	}
 
 	public static ArrayList<User> getUserTab() {
