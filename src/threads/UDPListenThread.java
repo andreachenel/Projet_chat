@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import network.Message;
 import network.MessageHandlerThread;
+import network.NetworkManager;
 
 public class UDPListenThread extends Thread {
 	DatagramSocket socket ;
@@ -19,24 +20,16 @@ public class UDPListenThread extends Thread {
 
 	public UDPListenThread (int p) {
 		port = p ;
-		boolean portFree = false ;
-		while (!portFree) {
-			portFree=true ;
-			try {
+
+		try {
 			//	System.out.println("attempting to open listen socket at port " + Integer.toString(port));
-				socket = new DatagramSocket(port);
-				socket.setSoTimeout(500);
-			} catch (SocketException e) {
-				System.out.println("	error with port "+Integer.toString(p)) ;
-				portFree=false ;
-				port-=1 ;
-			}
-			// System.out.printf("Opening UDP server at port %d\n",port);
+			socket = new DatagramSocket(port);
+			socket.setSoTimeout(500);
+		} catch (SocketException e) {
+			System.out.println("	error with port "+Integer.toString(port)) ;
 		}
-
-
-
-	} 
+		System.out.printf("Opening UDP listener at port %d\n",port);
+	}
 
 	public void run () {
 		running = true ;

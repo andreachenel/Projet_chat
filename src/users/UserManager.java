@@ -28,24 +28,32 @@ public class UserManager {
 	}
 
 	public static User findMe () {
-		return getUserTab().get(0) ;
+		return UserTab.get(0) ;
 	}
 
 	public static void addUser (String pseudo, String addr, int port) {
-		getUserTab().add(new User(pseudo, addr, port));
+		if (findUser(pseudo)!=-1) {
+			UserTab.add(new User(pseudo, addr, port));
+		}
+	}
+	
+	public static void addUser (User us) {
+		if (findUser(us.pseudo)!=-1) {
+			UserTab.add(us);
+		}
 	}
 
 	public static void remove(int index) {
-		getUserTab().remove(index);
+		UserTab.remove(index);
 	}
 
 	public static void removeUserByPseudo (String pseudo) {
 		int index = findUser(pseudo) ;
-		getUserTab().remove(index);
+		UserTab.remove(index);
 	}
 
-	public static void setUserAt(int index, User us) {
-		UserTab.set(index, us) ;
+	public static void insertUserAt(int index, String pseudo, String addr, int port) {
+		UserTab.add(index,new User(pseudo, addr, port));
 	}
 
 	public static int findUser (String pseudo) {
@@ -102,6 +110,9 @@ public class UserManager {
 		int index = findUser(pseudo) ;
 		UserTab.get(index).port=port ;
 	}
-	
+
+	public static ArrayList<User> getUserTab() {
+		return UserTab;
+	}
 
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import users.*;
-import javax.*;
+//import javax.*;
 
 public class InterfaceDiscussion {
 	JFrame interfaceFrame;

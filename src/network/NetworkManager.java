@@ -65,7 +65,7 @@ public class NetworkManager {
 			Message confirmMessage = new Message(MessageType.CONFIRMPSEUDO, us);
 			UDPClientThread confirmClient = new UDPClientThread(confirmMessage, "255.255.255.255",UDPListenPort);
 			confirmClient.start();
-			UserManager.addUser("Chat",NetworkManager.getLocalAddress(),TCPListenPort) ;
+			UserManager.insertUserAt(0,pseudo,NetworkManager.getLocalAddress(),TCPListenPort) ;
 			return 0 ;
 
 		} else {
