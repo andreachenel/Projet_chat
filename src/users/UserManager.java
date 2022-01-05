@@ -6,7 +6,17 @@ import network.NetworkManager;
 
 public class UserManager {
 
-	private static ArrayList<User> UserTab =new ArrayList<User>() ;
+	private static ArrayList<User> UserTab = new ArrayList<User>() ;
+	
+	
+	public static ArrayList<String> pseudoTab() {
+		ArrayList<String> pseudoTab = new ArrayList<String>() ;
+		for (User u : UserTab ) {
+			pseudoTab.add(u.pseudo);
+			}
+		return pseudoTab;
+	}
+	
 
 	public UserManager(String myPseudo, int myPort) {
 		UserTab = new ArrayList <User>();
@@ -35,7 +45,7 @@ public class UserManager {
 	}
 
 	public static void setUserAt(int index, User us) {
-		getUserTab().set(index, us) ;
+		UserTab.set(index, us) ;
 	}
 
 	public static int findUser (String pseudo) {
@@ -43,8 +53,8 @@ public class UserManager {
 
 		int i=0 ;
 		boolean found = false ;
-		while (!found && i<getUserTab().size()) {
-			if (pseudo.equals(getUserTab().get(i).pseudo)) {
+		while (!found && i<UserTab.size()) {
+			if (pseudo.equals(UserTab.get(i).pseudo)) {
 				result = i ;
 				found= true ;
 			}
@@ -59,8 +69,8 @@ public class UserManager {
 
 		int i=0 ;
 		boolean found = false ;
-		while (!found && i<getUserTab().size()) {
-			if (address.equals(getUserTab().get(i).addrIp)) {
+		while (!found && i<UserTab.size()) {
+			if (address.equals(UserTab.get(i).addrIp)) {
 				result = i ;
 				found= true ;
 			}
@@ -69,20 +79,21 @@ public class UserManager {
 
 		return result;
 	}
+	
 
 	public static User userAt (int i) {
-		return getUserTab().get(i) ;
+		return UserTab.get(i) ;
 	}
 
 	public static int length() {
-		return getUserTab().size();
+		return UserTab.size();
 	}
 
 	public static void printUserTab () {
 		System.out.print("- - UserTab : ") ;
-		for (int i = 0; i < getUserTab().size();i++) 
+		for (int i = 0; i < UserTab.size();i++) 
 		{ 		      
-			System.out.print(getUserTab().get(i).pseudo+" "); 		
+			System.out.print(UserTab.get(i).pseudo+" "); 		
 		} 
 		System.out.println() ;
 	}
@@ -92,8 +103,5 @@ public class UserManager {
 		UserTab.get(index).port=port ;
 	}
 	
-	public static ArrayList<User> getUserTab() {
-		return UserTab;
-	}
 
 }
