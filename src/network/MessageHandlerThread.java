@@ -53,7 +53,10 @@ public class MessageHandlerThread extends Thread {
 
 			UserManager.addUser(us.getPseudo(), us.getAddrIp(), us.getPort());
 			System.out.println("Added user : " + us.getPseudo()) ;
-
+			break;
+			
+		case DISCONNECT :
+			System.out.println("User disconnected: " + us.getPseudo()) ;
 			break;
 
 		}
