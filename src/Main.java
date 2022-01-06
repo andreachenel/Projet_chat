@@ -9,11 +9,9 @@ public class Main {
 	public static void main (String[] args) throws ClassNotFoundException, SQLException {
 
 
-		InterfaceConnexion connex = new InterfaceConnexion();
-		connex.run();
+//		InterfaceManager manag = new InterfaceManager();
+//		manag.run()
 		
-		InterfaceDiscussion disc = new InterfaceDiscussion();
-		disc.run();
 //		
 //		UserManager.setMyID("1");
 //		
@@ -30,13 +28,9 @@ public class Main {
 //		
 //		UserManager.printUserTab();
 		
-		/*UDPListenThread lt = new UDPListenThread(NetworkManager.UDPListenPort) ;
+		UDPListenThread lt = new UDPListenThread(NetworkManager.UDPListenPort) ;
 		lt.start();
->>>>>>> refs/remotes/origin/main
 
-		InterfaceDiscussion disc = new InterfaceDiscussion();
-<<<<<<< HEAD
-		disc.run();
 	       
 //	
 //		int connected = -1 ;
@@ -56,8 +50,6 @@ public class Main {
 		
 //		InterfaceDiscussion disc = new InterfaceDiscussion();
 //		disc.run();
-=======
-		disc.run();*/
 
 		
 //		System.out.println(NetworkManager.getLocalAddress());

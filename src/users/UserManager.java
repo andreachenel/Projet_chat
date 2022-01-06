@@ -41,7 +41,7 @@ public class UserManager {
 	}
 
 	public static void addUser (String pseudo, String addr, int port) {
-		if (findUser(pseudo)!=-1) {
+		if (findUser(pseudo)==-1) {
 			UserTab.add(new User(pseudo, addr, port));
 		}
 	}

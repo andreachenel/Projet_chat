@@ -51,6 +51,7 @@ public class MessageHandlerThread extends Thread {
 			}
 
 			UserManager.addUser(us.pseudo, us.addrIp, us.port);
+			UserManager.printUserTab() ;
 			System.out.println("Added user : " + us.pseudo) ;
 			break;
 

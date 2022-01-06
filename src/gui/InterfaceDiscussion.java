@@ -73,5 +73,8 @@ public class InterfaceDiscussion {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		interfaceFrame.setVisible(true);
 	}
+	public String getUserChoosen() {
+		return usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
+	}
 
 }
