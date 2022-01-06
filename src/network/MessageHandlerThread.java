@@ -50,8 +50,13 @@ public class MessageHandlerThread extends Thread {
 				System.out.println("User already in table, removed old pseudo") ;
 			}
 
+
 			UserManager.addUser(us.getPseudo(), us.getAddrIp(), us.getPort());
 			System.out.println("Added user : " + us.getPseudo()) ;
+			break;
+			
+		case DISCONNECT :
+			System.out.println("User disconnected: " + us.getPseudo()) ;
 			break;
 
 		}

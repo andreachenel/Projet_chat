@@ -1,12 +1,13 @@
 import java.sql.SQLException;
-
 import com.mysql.jdbc.ResultSet;
 
+import bdd.DatabaseManager;
 import users.UserManager;
 import network.*;
 import threads.*;
+
 import gui.*;
-import bdd.*;
+
 
 public class Main {
 	

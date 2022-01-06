@@ -10,17 +10,17 @@ import bdd.DatabaseManager;
 
 public class InterfaceConnexion {
 	JFrame interfaceFrame;
-	public JTextField idField, pwdField, pseudoField ;
+	JTextField idField, pseudoField ;
+	JPasswordField pwdField;
 	JButton loginButton, pseudoButton ;
 	JPanel interfacePanel;
 	JLabel connectedMessage, enterId, enterPwd, errorMessage, pseudoMessage ;
-	boolean running = true ;
 
 
 	public InterfaceConnexion() {
 		interfaceFrame = new JFrame("Log in");
 		idField = new JTextField (10) ;
-		pwdField = new JTextField (10) ;
+		pwdField = new JPasswordField () ;
 		pseudoField = new JTextField ();
 		connectedMessage = new JLabel();
 		errorMessage = new JLabel(); 
@@ -31,6 +31,8 @@ public class InterfaceConnexion {
 
 		//Create the panel
 		interfacePanel = new JPanel(null); 
+		
+		interfacePanel.setBackground(Color.PINK);
 
 		
 		// Log in
@@ -52,7 +54,7 @@ public class InterfaceConnexion {
 					errorMessage.setText("Erreur, identifiant ou mot de passe incorrect");
 				} 		
 
-				if (/*eq*/ true) //L'ID et le mot de passe concordent
+				if (eq) //L'ID et le mot de passe concordent
 				{
 
 					loginButton.setText("CONNECTED");
@@ -81,15 +83,14 @@ public class InterfaceConnexion {
 
 				interfacePanel.add(pseudoButton);	
 
-				/* if le pseudo est valide */
+				/* si le pseudo est valide */
 				if (/*(NetworkManager.requestPseudo(pseudo))==0*/ true)
 				{
 					pseudoMessage.setText("Pseudo ok");	
 					pseudoButton.setText("Pseudo valide");	
 					pseudoButton.setEnabled(false);
-
-					running = false;
-					interfaceFrame.dispatchEvent(new WindowEvent(interfaceFrame, WindowEvent.WINDOW_CLOSING));
+					interfaceFrame.setVisible(false);
+					interfaceFrame.dispose();
 					DatabaseManager.changePseudo(pseudo) ;
 
 				} else {
@@ -119,8 +120,6 @@ public class InterfaceConnexion {
 		//Add to the Panel
 		interfacePanel.add(idField);
 		
-		InterfaceDiscussion disc = new InterfaceDiscussion();
-		disc.run();
 		interfacePanel.add(pwdField);
 		interfacePanel.add(enterId); ;
 		interfaceFrame.repaint() ;
@@ -140,7 +139,7 @@ public class InterfaceConnexion {
 	public void run () {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		interfaceFrame.setVisible(true);
-	
+
 	}
 
 	public JTextField getidField () {
