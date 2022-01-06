@@ -12,7 +12,6 @@ public class TestMain {
 		int portRecep = NetworkManager.UDPListenPort ;
 
 		UserManager.insertUserAt(0,"TestBot", NetworkManager.getLocalAddress(),portRecep) ;
-		UserManager.printUserTab() ;
 
 		// open UDP listener to handle new users & pseudo change requests
 		UDPListenThread list = new UDPListenThread(portRecep);
@@ -22,8 +21,6 @@ public class TestMain {
 		ThreadManager threadManager = new ThreadManager () ;
 		threadManager.start();
 
-
-		//DBM.close();
 
 	}	
 }

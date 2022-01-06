@@ -6,6 +6,8 @@ import gui.*;
 import bdd.*;
 
 public class Main {
+	
+	
 	public static void main (String[] args) throws ClassNotFoundException, SQLException {
 
 
@@ -18,12 +20,20 @@ public class Main {
 //		DatabaseManager DBM = new DatabaseManager() ;
 //		DBM.create() ;
 		/*int connected = -1 ;
+
 		
-		while (connected==-1) {
-			connected = NetworkManager.requestPseudo("Pierre") ;
-		}*/
+		DatabaseManager DBM = new DatabaseManager() ;
+		DBM.create() ;
+		String id1="TestBot2" ;
+		String id2="Pierre2" ;
+		String message="bonsoir" ;
+		String upd = "INSERT INTO messages values('"+id1+"','"+id2+"','"+message+"','1')" ;
+		DBM.retrieveMessages(id1,id2) ;
+		//InterfaceConnexion ic = new InterfaceConnexion() ;
+		//ic.run() ;
 		
-//		DatabaseManager.changePseudo("Pierre") ;
+//		DatabaseManager.verifyLogin("TestBot", "") ;
+//		NetworkManager.requestPseudo("XxPierreDu31xX") ;
 //		DBM.printLoginTable();
 //		
 //		UserManager.printUserTab();
@@ -59,7 +69,15 @@ public class Main {
 //		
 		// !! initiateTCP has been modified for testing purposes (delete +10 at TM line 26)
 
-		//DBM.close();
+		DBM.printMessages();
+
+		InterfaceConnexion connex = new InterfaceConnexion();
+		connex.run();
+		
+		InterfaceDiscussion disc = new InterfaceDiscussion();
+		disc.run();
+
+*/
 
 	}	
 }

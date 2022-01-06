@@ -32,6 +32,8 @@ public class InterfaceConnexion {
 		//Create the panel
 		interfacePanel = new JPanel(null); 
 
+		
+		// Log in
 		loginButton = new JButton (new AbstractAction("Log in") {
 			private static final long serialVersionUID = 1L;
 
@@ -45,14 +47,13 @@ public class InterfaceConnexion {
 				boolean eq=false;
 				try {
 					eq = DatabaseManager.verifyLogin(log, pwd) ;
+					System.out.println(Boolean.toString(eq));
 				} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 					errorMessage.setText("Erreur, identifiant ou mot de passe incorrect");
 				} 		
 
-
 				if (/*eq*/ true) //L'ID et le mot de passe concordent
 				{
-					UserManager.setMyID(log);
 
 					loginButton.setText("CONNECTED");
 					connectedMessage.setText("Connexion réussie ! choisissez un pseudonyme :");
@@ -71,6 +72,7 @@ public class InterfaceConnexion {
 
 		}) ;
 
+		// Choose a pseudo
 		pseudoButton = new JButton ( new AbstractAction("Check pseudo") {
 			private static final long serialVersionUID = 1L;
 

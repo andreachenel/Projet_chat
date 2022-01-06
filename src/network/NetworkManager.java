@@ -66,7 +66,11 @@ public class NetworkManager {
 			Message confirmMessage = new Message(MessageType.CONFIRMPSEUDO, us);
 			UDPClientThread confirmClient = new UDPClientThread(confirmMessage, "255.255.255.255",UDPListenPort);
 			confirmClient.start();
+			
+			// update local connectedUsers table & remote database
 			UserManager.insertUserAt(0,pseudo,NetworkManager.getLocalAddress(),TCPListenPort) ;
+			DatabaseManager.changePseudo(pseudo);
+			
 			return 0 ;
 
 		} else {
