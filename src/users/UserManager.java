@@ -40,6 +40,10 @@ public class UserManager {
 	public static User findMe () {
 		return UserTab.get(0) ;
 	}
+	
+	public static String myPseudo () {
+		return UserTab.get(0).getPseudo() ;
+	}
 
 	public static void addUser (String pseudo, String addr, int port) {
 		if (findUser(pseudo)==-1) {

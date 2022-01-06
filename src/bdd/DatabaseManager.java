@@ -1,6 +1,9 @@
 package bdd;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 import users.UserManager;
 
@@ -13,6 +16,7 @@ public class DatabaseManager {
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(req);
+			/*
 			System.out.println("login table :") ;
 			while(resultSet.next())
 			{
@@ -21,8 +25,8 @@ public class DatabaseManager {
 				System.out.println("	password = " + resultSet.getString("password"));
 
 				System.out.println("	currentPseudo = " + resultSet.getString("currentPseudo"));
-			}
-			statement.close();
+			}*/
+			//statement.close();
 		} catch (SQLException e){
 			e.printStackTrace() ;
 		}
@@ -121,6 +125,8 @@ public class DatabaseManager {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}	
+		} else {
+			System.out.println("myID is null ! please connect first");
 		}
 	}
 
@@ -146,7 +152,6 @@ public class DatabaseManager {
 				UserManager.setMyID(id);
 				System.out.println("New user ! entry created in login database");
 			}
-			statement.close();
 		} catch (MySQLSyntaxErrorException e) {
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -158,50 +163,73 @@ public class DatabaseManager {
 	public void printMessages () {
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * from messages");
+			resultSet = statement.executeQuery("SELECT * from messages ORDER BY time ASC");
 			System.out.println("messages :") ;
 			while(resultSet.next())
 			{
-				// iterate & read the result set
 				System.out.println("	"+resultSet.getString("id1")+" -> "+resultSet.getString("id2")+" at "+resultSet.getString("time")+" : "+resultSet.getString("message"));
 			}
-			statement.close();
 		} catch (SQLException e){
 			e.printStackTrace() ;
 		}
 	}
 	
 	public ResultSet retrieveMessages (String id1, String id2) {
-		resultSet = null ;
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='"+id1+"' AND id2='"+id2+"') OR (id1='"+id2+"' AND id2='"+id1+"')");
-			System.out.println("Conversation between "+id1+" and "+id2+" :") ;
-			while(resultSet.next())
-			{
-				// iterate & read the result set
-				System.out.println("	"+resultSet.getString("id1")+" -> "+resultSet.getString("id2")+" at "+resultSet.getString("time")+" : "+resultSet.getString("message"));
-			}
-			statement.close();
+			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='"+id1+"' AND id2='"+id2+"') OR (id1='"+id2+"' AND id2='"+id1+"') ORDER BY time ASC");
+			//statement.close();
 		} catch (SQLException e){
 			e.printStackTrace() ;
 		}
 		return resultSet ;
 	}
 	
-	public void newMessage (String id1, String id2, String message) {
-		String upd = "INSERT INTO messages values('"+id1+"','"+id2+"','"+message+"','1')" ;
+	public static void newMessage (String pseudo1, String pseudo2, String message) {
+		 
 		try {
 			statement = connection.createStatement();
+			// retrieve ids corresponding to pseudos
+			String id1 = "" ;
+			String id2 = "" ;
+			String query = "SELECT id from login WHERE currentPseudo='"+pseudo1+"'" ;
+			if (resultSet != null) {
+				resultSet = statement.executeQuery(query) ;
+				if (resultSet.next()) {
+					id1 = resultSet.getString("id") ;
+				}
+				System.out.println("found id1 "+id1 +" for pseudo"+pseudo1);
+			} else {
+				System.out.println("error : Pseudo "+pseudo1 +" not found in database");
+			}
+			
+			query = "SELECT id from login WHERE currentPseudo='"+pseudo2+"'" ;
+			if (resultSet != null) {
+				resultSet = statement.executeQuery(query) ;
+				if (resultSet.next()) {
+					id2 = resultSet.getString("id") ;
+				}
+				System.out.println("found id2 "+id2+" for pseudo"+pseudo2);
+			} else {
+				System.out.println("error : Pseudo "+pseudo2 +" not found in database");
+			}
+			
+			// retrieve date
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+			LocalDateTime now = LocalDateTime.now(); 
+			
+			// execute the update
+			String upd = "INSERT INTO messages values('"+id1+"','"+id2+"','"+message+"','"+dtf.format(now)+"')" ;
+			statement = connection.createStatement();
 			statement.executeUpdate(upd);
-			statement.close();
+			
+			//statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static boolean checkID(String ID) {
-		
 		
 		return false;
 	}

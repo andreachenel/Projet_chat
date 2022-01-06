@@ -24,10 +24,12 @@ public class ThreadManager extends Thread {
 		}
 		if (a!= null && openTCPConnections.containsKey(a)) {
 			openTCPConnections.get(a).send(message);
+			
 		} else {
 			System.out.println("Error ThreadManager send : no TCP connection found with "+addr);
 			this.initiateTCP(addr);
 			openTCPConnections.get(a).send(message);
+			
 		}
 	}
 	

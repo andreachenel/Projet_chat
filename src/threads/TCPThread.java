@@ -4,6 +4,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+import bdd.DatabaseManager;
+import users.UserManager;
+
 public class TCPThread extends Thread {
 
 	private Socket socket ;
@@ -36,6 +39,9 @@ public class TCPThread extends Thread {
 				// send if there is something to send
 				if (out.length()>0) {
 					printer.println(out);
+					String remotePseudo = UserManager.userAt(UserManager.findUserByAddress(socket.getInetAddress().getHostAddress())).getPseudo() ;
+					DatabaseManager.newMessage(UserManager.myPseudo(),remotePseudo, out);
+					
 					out="" ;
 				}
 			}
