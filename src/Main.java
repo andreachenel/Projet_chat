@@ -1,9 +1,7 @@
 import java.sql.SQLException;
 
-import com.mysql.jdbc.ResultSet;
-
 import bdd.DatabaseManager;
-import gui.InterfaceConnexion;
+import gui.InterfaceManager;
 import network.NetworkManager;
 import threads.ThreadManager;
 
@@ -15,6 +13,8 @@ public class Main {
 		
 		DatabaseManager DBM = new DatabaseManager() ;
 		DBM.create() ;
+		InterfaceManager inter = new InterfaceManager();
+		inter.run();
 		
 		String id1="TestBot" ;
 		String id2="Pierre" ;
@@ -22,16 +22,13 @@ public class Main {
 		//String upd = "INSERT INTO messages values('"+id1+"','"+id2+"','"+message+"','1')" ;
 		// DatabaseManager.newMessage("", "XXPierreDu31xX", message);
 		//DBM.update("DELETE FROM messages");
-		InterfaceConnexion ic = new InterfaceConnexion() ;
-		ic.run() ;
+	
 		
-		DatabaseManager.verifyLogin("Pierre", "mdpDePierre") ;
-		NetworkManager.requestPseudo("Hi") ;
 //		DBM.printLoginTable();
 		//DBM.printMessages();
 		
 		try {
-			Thread.sleep(200);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -45,8 +42,7 @@ public class Main {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		NetworkManager.disconnect();
+
 		
 		//InterfaceConnexion connex = new InterfaceConnexion();
 		//connex.run();

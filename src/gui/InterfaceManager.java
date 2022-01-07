@@ -16,16 +16,18 @@ public class InterfaceManager {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 		
-		MainInterface inter= new MainInterface();
-		
+		System.out.println("je crée connex");
+		MainInterface inter = new MainInterface();
+
+		inter.interfaceFrame.revalidate();
+		inter.interfaceFrame.repaint();
 		InterfaceConnexion connex = new InterfaceConnexion();
 		connex.run();
 		connex.interfaceFrame.addWindowListener(new WindowListener() {
 		
 			@Override
 		public void windowClosed(WindowEvent arg0) {
-			inter.run();
-			
+			inter.run();	
 		}
 
 		@Override
@@ -52,23 +54,23 @@ public class InterfaceManager {
 		public void windowOpened(WindowEvent e) {			
 		}
 	});
+		
 		inter.interfaceFrame.addWindowListener(new WindowListener() {
-
 			@Override
 			public void windowActivated(WindowEvent arg1) {
 			}
 
 			@Override
 			public void windowClosed(WindowEvent arg1) {
-			//	NetworkManager.disconnect();
-				System.out.println("fenetre fermée");
-				InterfaceConnexion connex = new InterfaceConnexion();
-				connex.run();
+				NetworkManager.disconnect();
+				System.out.println("fenetre fermée");	
+				System.exit(0);
 			}
 
 			@Override
 			public void windowClosing(WindowEvent arg1) {
-				
+				NetworkManager.disconnect();
+				System.exit(0);
 				}
 
 			@Override
