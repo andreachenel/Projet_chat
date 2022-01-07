@@ -45,10 +45,8 @@ public class Main {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		ResultSet resultSet = (ResultSet) DBM.retrieveMessages("Pierre","TestBot") ;
-		while(resultSet.next()) {
-			System.out.println("	"+resultSet.getString("id1")+" -> "+resultSet.getString("id2")+" at "+resultSet.getString("time")+" : "+resultSet.getString("message"));
-		}
+		
+		NetworkManager.disconnect();
 		
 		//InterfaceConnexion connex = new InterfaceConnexion();
 		//connex.run();

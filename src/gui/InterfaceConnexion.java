@@ -87,22 +87,22 @@ public class InterfaceConnexion {
 
 				interfacePanel.add(pseudoButton);
 
-				/* si le pseudo est valide */
-				if (/*(NetworkManager.requestPseudo(pseudo)) == 0*/ true) {
-					pseudoMessage.setText("Pseudo ok");
-					pseudoButton.setText("Pseudo valide");
+				// broadcast a request to use pseudo. if valid, close the interface
+				if (NetworkManager.requestPseudo(pseudo)==0)
+				{
+					pseudoMessage.setText("Pseudo ok");	
+					pseudoButton.setText("Pseudo valide");	
 					pseudoButton.setEnabled(false);
 					interfaceFrame.setVisible(false);
 					interfaceFrame.dispose();
-					DatabaseManager.changePseudo(pseudo);
 
 				} else {
 					pseudoMessage.setText("Pseudo indisponible");
 					pseudoButton.setText("Pseudo invalide");
 				}
-//				interfaceFrame.setVisible(true);
-				interfaceFrame.revalidate();
-				interfaceFrame.repaint();
+
+				interfaceFrame.revalidate() ;
+				interfaceFrame.repaint() ;
 			}
 
 		});

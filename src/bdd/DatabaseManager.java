@@ -185,34 +185,33 @@ public class DatabaseManager {
 		return resultSet ;
 	}
 	
+	public static String getId (String pseudo) {
+		String id = "";
+		String query = "SELECT id from login WHERE currentPseudo='" + pseudo + "'";
+		try {
+			statement = connection.createStatement();
+			// retrieve id corresponding to pseudo		
+			if (resultSet != null) {
+				resultSet = statement.executeQuery(query);
+				if (resultSet.next()) {
+					id = resultSet.getString("id");
+				}
+				System.out.println("found id1 " + id + " for pseudo" + pseudo);
+			} else {
+				System.out.println("error : Pseudo " + pseudo + " not found in database");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+	
 	public static void newMessage (String pseudo1, String pseudo2, String message) {
 		 
 		try {
-			statement = connection.createStatement();
-			// retrieve ids corresponding to pseudos
-			String id1 = "" ;
-			String id2 = "" ;
-			String query = "SELECT id from login WHERE currentPseudo='"+pseudo1+"'" ;
-			if (resultSet != null) {
-				resultSet = statement.executeQuery(query) ;
-				if (resultSet.next()) {
-					id1 = resultSet.getString("id") ;
-				}
-				System.out.println("found id1 "+id1 +" for pseudo"+pseudo1);
-			} else {
-				System.out.println("error : Pseudo "+pseudo1 +" not found in database");
-			}
-			
-			query = "SELECT id from login WHERE currentPseudo='"+pseudo2+"'" ;
-			if (resultSet != null) {
-				resultSet = statement.executeQuery(query) ;
-				if (resultSet.next()) {
-					id2 = resultSet.getString("id") ;
-				}
-				System.out.println("found id2 "+id2+" for pseudo"+pseudo2);
-			} else {
-				System.out.println("error : Pseudo "+pseudo2 +" not found in database");
-			}
+			String id1 = getId(pseudo1) ;
+			String id2 = getId(pseudo2) ;
 			
 			// retrieve date
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
@@ -223,7 +222,6 @@ public class DatabaseManager {
 			statement = connection.createStatement();
 			statement.executeUpdate(upd);
 			
-			//statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

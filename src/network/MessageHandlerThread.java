@@ -1,5 +1,6 @@
 package network;
 
+import threads.ThreadManager;
 import threads.UDPClientThread;
 import users.*;
 
@@ -55,10 +56,11 @@ public class MessageHandlerThread extends Thread {
 			System.out.println("Added user : " + us.getPseudo()) ;
 			break;
 			
-		case DISCONNECT :
+		case DISCONNECTED :
 			System.out.println("User disconnected: " + us.getPseudo()) ;
+			UserManager.removeUserByPseudo(us.getPseudo());
+			ThreadManager.closeTCP(us.getAddrIp());
 			break;
-
 		}
 	}
 }
