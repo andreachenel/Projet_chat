@@ -1,8 +1,7 @@
-import bdd.DatabaseManager;
 import network.NetworkManager;
-import threads.*;
+import threads.ThreadManager;
+import threads.UDPListenThread;
 import users.UserManager;
-import gui.*;
 
 public class TestMain {
 	public static void main (String[] args) {
@@ -29,8 +28,8 @@ public class TestMain {
 			e.printStackTrace();
 		}
 		
-		MainInterface inter = new MainInterface();
-		inter.run();
+		//MainInterface inter = new MainInterface();
+		//inter.run();
 
 
 	}	
