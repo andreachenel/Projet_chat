@@ -1,12 +1,11 @@
 import java.sql.SQLException;
+
 import com.mysql.jdbc.ResultSet;
 
 import bdd.DatabaseManager;
-import users.UserManager;
-import network.*;
-import threads.*;
-
-import gui.*;
+import gui.InterfaceConnexion;
+import network.NetworkManager;
+import threads.ThreadManager;
 
 
 public class Main {
@@ -23,8 +22,8 @@ public class Main {
 		//String upd = "INSERT INTO messages values('"+id1+"','"+id2+"','"+message+"','1')" ;
 		// DatabaseManager.newMessage("", "XXPierreDu31xX", message);
 		//DBM.update("DELETE FROM messages");
-		//InterfaceConnexion ic = new InterfaceConnexion() ;
-		//ic.run() ;
+		InterfaceConnexion ic = new InterfaceConnexion() ;
+		ic.run() ;
 		
 		DatabaseManager.verifyLogin("Pierre", "mdpDePierre") ;
 		NetworkManager.requestPseudo("Hi") ;

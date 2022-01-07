@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+
+import network.NetworkManager;
 import users.*;
 
 public class MainInterface{
@@ -11,10 +13,10 @@ public class MainInterface{
 	JTextField msg;
 	JLabel coUsr, usrCh;
 	JPanel panel;
-	JButton send, button, done;
+	JButton send, button, done, disco;
 	JComboBox<String> usrComboBox;
 	String[] usersToChoose;
-	// JFrame disc;
+	
 	
 	public MainInterface() {
 		interfaceFrame = new JFrame("Chat");
@@ -24,8 +26,9 @@ public class MainInterface{
 		button = new JButton ("blabla");
 		usrCh = new JLabel ("User Choosen");
 		done = new JButton("Done");
-		// disc  = new JFrame("Discussions");
-		
+		disco = new JButton("Log out");
+	
+		interfaceFrame.setDefaultCloseOperation(NetworkManager.disconnect);
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 		
@@ -34,6 +37,12 @@ public class MainInterface{
                 String selectedUser = "You selected " + usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
                 panel.add(usrCh);
                 usrCh.setText(selectedUser);
+            }
+        });
+        
+        send.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            
             }
         });
     
@@ -50,7 +59,8 @@ public class MainInterface{
 		usrCh.setBounds(90, 150, 400, 100);
 		usrComboBox.setBounds(80, 100, 160, 30);
         done.setBounds(120, 150, 80, 20);
-     //   disc.setBounds(500, 0, 500, 600);
+        disco.setBounds(1100, 20, 100, 30);
+
 
 		//Add to the panel 
 		panel.add(coUsr);
@@ -58,7 +68,7 @@ public class MainInterface{
 		panel.add(send);
 		panel.add(done);
         panel.add(usrComboBox);
-        //panel.add(disc);
+
 		
 		interfaceFrame.getContentPane().add(panel, BorderLayout.CENTER);
 
@@ -70,7 +80,6 @@ public class MainInterface{
 	public void run () {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		interfaceFrame.setVisible(true);
-		//disc.setVisible(true);
 	}
 	public String getUserChoosen() {
 		return usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
