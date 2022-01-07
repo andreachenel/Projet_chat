@@ -70,6 +70,7 @@ public class NetworkManager {
 
 			// update local connectedUsers table & remote database
 			UserManager.insertUserAt(0, pseudo, NetworkManager.getLocalAddress(), TCPListenPort);
+			UserManager.printUserTab();
 			DatabaseManager.changePseudo(pseudo);
 			receiveOk = false;
 
@@ -81,8 +82,8 @@ public class NetworkManager {
 		}
 	}
 
-	public static void disconnect() {
-		System.out.println("Disconnecting");
+	public static int disconnect() {
+		System.out.println("Disconnecting bla");
 
 		// Notify disconnection by broadcasting
 		User us = new User(UserManager.myPseudo(), NetworkManager.getLocalAddress(), TCPListenPort);
@@ -90,6 +91,7 @@ public class NetworkManager {
 
 		UDPClientThread requestClient = new UDPClientThread(disconnectedMessage, "255.255.255.255", UDPListenPort);
 		requestClient.start();
+		return 0;
 	}
 
 }

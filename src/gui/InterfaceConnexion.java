@@ -83,6 +83,7 @@ public class InterfaceConnexion {
 
 			public void actionPerformed(ActionEvent event) {
 				String pseudo = pseudoField.getText();
+				https: // start.ubuntu-mate.org/
 
 				interfacePanel.add(pseudoButton);
 
@@ -98,6 +99,7 @@ public class InterfaceConnexion {
 					pseudoMessage.setText("Pseudo indisponible");
 					pseudoButton.setText("Pseudo invalide");
 				}
+
 				interfaceFrame.revalidate();
 				interfaceFrame.repaint();
 			}

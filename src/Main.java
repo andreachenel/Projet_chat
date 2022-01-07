@@ -1,12 +1,8 @@
 import java.sql.SQLException;
-import com.mysql.jdbc.ResultSet;
 
 import bdd.DatabaseManager;
-import users.UserManager;
-import network.*;
-import threads.*;
-
-import gui.*;
+import gui.InterfaceManager;
+import threads.ThreadManager;
 
 public class Main {
 
@@ -14,6 +10,8 @@ public class Main {
 
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
+		InterfaceManager inter = new InterfaceManager();
+		inter.run();
 
 		String id1 = "TestBot";
 		String id2 = "Pierre";
@@ -22,16 +20,12 @@ public class Main {
 		// values('"+id1+"','"+id2+"','"+message+"','1')" ;
 		// DatabaseManager.newMessage("", "XXPierreDu31xX", message);
 		// DBM.update("DELETE FROM messages");
-		// InterfaceConnexion ic = new InterfaceConnexion() ;
-		// ic.run() ;
 
-		DatabaseManager.verifyLogin("Pierre", "mdpDePierre");
-		NetworkManager.requestPseudo("Hi");
-		// DBM.printLoginTable();
+//		DBM.printLoginTable();
 		// DBM.printMessages();
 
 		try {
-			Thread.sleep(200);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -39,14 +33,6 @@ public class Main {
 		ThreadManager tm = new ThreadManager();
 		DBM.printLoginTable();
 		tm.sendTo("TestBot", "ça confctionne");
-
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		NetworkManager.disconnect();
 
 		// InterfaceConnexion connex = new InterfaceConnexion();
 		// connex.run();
