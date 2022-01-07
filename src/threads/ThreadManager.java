@@ -13,8 +13,18 @@ import users.UserManager;
 public class ThreadManager extends Thread {
 	
 	private boolean TCPServerRunning = true ;
-	private HashMap<InetAddress,TCPThread> openTCPConnections = new HashMap<>() ;
+	private static HashMap<InetAddress,TCPThread> openTCPConnections = new HashMap<>() ;
 
+	public static TCPThread connectedTo (String addr) {
+		TCPThread res = null ;
+		try {
+			res = openTCPConnections.get(InetAddress.getByName(addr)) ;
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return res ;
+	}
+	
 	public void send(String addr,String message) {
 		InetAddress a = null ;
 		try {
@@ -50,6 +60,20 @@ public class ThreadManager extends Thread {
 		}
 	}
 
+	public static void closeTCP (String addr) {
+		TCPThread t = connectedTo(addr) ;
+		if (t!=null) {
+			System.out.println("Closing TCP connexion with "+addr);
+			t.close();
+			try {
+				openTCPConnections.remove(InetAddress.getByName(addr)) ;
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	public void initiateTCP(String addr) {
 		int port = NetworkManager.TCPPort ;
 		System.out.println("Initiating TCP client at port "+Integer.toString(port) + " for address "+addr);

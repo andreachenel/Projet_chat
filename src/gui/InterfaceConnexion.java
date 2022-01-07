@@ -1,12 +1,19 @@
 package gui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import javax.swing.*;
-import network.*;
-import users.UserManager;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 import bdd.DatabaseManager;
+import network.NetworkManager;
 
 public class InterfaceConnexion {
 	JFrame interfaceFrame;
@@ -42,7 +49,7 @@ public class InterfaceConnexion {
 			public void actionPerformed (ActionEvent event) {
 
 				String log = idField.getText();
-				String pwd = pwdField.getText();
+				String pwd = String.valueOf(pwdField.getPassword());
 
 				errorMessage.setText("");
 				connectedMessage.setText("");
@@ -83,21 +90,19 @@ public class InterfaceConnexion {
 
 				interfacePanel.add(pseudoButton);	
 
-				/* si le pseudo est valide */
-				if (/*(NetworkManager.requestPseudo(pseudo))==0*/ true)
+				// broadcast a request to use pseudo. if valid, close the interface
+				if (NetworkManager.requestPseudo(pseudo)==0)
 				{
 					pseudoMessage.setText("Pseudo ok");	
 					pseudoButton.setText("Pseudo valide");	
 					pseudoButton.setEnabled(false);
 					interfaceFrame.setVisible(false);
 					interfaceFrame.dispose();
-					DatabaseManager.changePseudo(pseudo) ;
 
 				} else {
 					pseudoMessage.setText("Pseudo indisponible");	
 					pseudoButton.setText("Pseudo invalide");
 				}
-//				interfaceFrame.setVisible(true);
 				interfaceFrame.revalidate() ;
 				interfaceFrame.repaint() ;
 			}
