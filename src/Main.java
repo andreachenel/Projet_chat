@@ -2,10 +2,6 @@ import java.sql.SQLException;
 
 import bdd.DatabaseManager;
 import gui.InterfaceManager;
-import network.NetworkManager;
-import gui.*;
-import threads.ThreadManager;
-import threads.UDPListenThread;
 
 public class Main {
 
@@ -14,17 +10,11 @@ public class Main {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 
+
 		InterfaceManager inter = new InterfaceManager();
 		inter.run();
 		
-	
 
-
-		// InterfaceConnexion connex = new InterfaceConnexion();
-		// connex.run();
-
-		// InterfaceDiscussion disc = new InterfaceDiscussion();
-		// disc.run();
 	}
 }
 
