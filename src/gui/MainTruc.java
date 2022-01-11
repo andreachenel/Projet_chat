@@ -27,6 +27,23 @@ public class MainTruc {
 	JScrollPane jpRight;
 	JTextArea rTxt, lTxt ;
 	
+	class Updater extends Thread {
+		public void run() {
+			while (true) {
+				try {
+					Thread.sleep(1000) ;
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+//			rTxt.setCaretPosition(rTxt.getText().length() - 1);
+//			rTxt.update(rTxt.getGraphics());
+//			interfaceFrame.revalidate();
+//			interfaceFrame.repaint();
+		}
+	}
 
 	public MainTruc() {
 		interfaceFrame = new JFrame("Chat");
@@ -49,15 +66,9 @@ public class MainTruc {
 		interfaceFrame.setSize(450, 400);
 		interfaceFrame.getContentPane().setLayout(null);
 
-		
-		ResultSet resultSet = (ResultSet) DatabaseManager.retrieveMessages ("Pierre", "TestBot");
-		try {
-			while (resultSet.next()) {
-				rTxt.append("	" + resultSet.getString("id1") + " -> " + resultSet.getString("id2") + " at "
-						+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");		}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+
+		rTxt.setText(DatabaseManager.retrieveMessages("Pierre","TestBot")) ;
+
 		
 		// Left part
 		lTxt.setAutoscrolls(true);
@@ -95,6 +106,9 @@ public class MainTruc {
 				String message = msg.getText();
 				DatabaseManager.newMessage(UserManager.myPseudo(), usrComboBox.getItemAt(usrComboBox.getSelectedIndex()),message);
 				msg.setText("");
+
+				rTxt.setText(DatabaseManager.retrieveMessages("Pierre","TestBot")) ;
+
 			}
 		});
 				
@@ -142,6 +156,9 @@ public class MainTruc {
 	public void run() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		interfaceFrame.setVisible(true);
+		Updater u = new Updater () ;
+		u.start();
+		
 	}
 
 	public String getUserChoosen() {
