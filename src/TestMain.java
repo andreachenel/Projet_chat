@@ -11,10 +11,14 @@ public class TestMain {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 
-		int portRecep = NetworkManager.UDPListenPort;
-
+		int portRecep = NetworkManager.UDPListenPort ;
+		System.out.println("     Starting up TestBot") ;
+		
+		// Manually connecting : setting ID & pseudo
+		UserManager.setMyID("TestBot") ;
 		UserManager.insertUserAt(0, "TestBot", NetworkManager.getLocalAddress(), portRecep);
-		System.out.println(NetworkManager.getLocalAddress());
+		System.out.println("Local address : "+NetworkManager.getLocalAddress());
+		
 		// open UDP listener to handle new users & pseudo change requests
 		UDPListenThread list = new UDPListenThread(portRecep);
 		list.start();
@@ -25,15 +29,6 @@ public class TestMain {
 
 		MainTruc mt = new MainTruc();
 		mt.run();
-
-//		try {
-//			Thread.sleep(10000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-
-		// MainInterface inter = new MainInterface();
-		// inter.run();
 
 	}
 }

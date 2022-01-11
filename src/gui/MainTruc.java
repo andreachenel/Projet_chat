@@ -3,16 +3,20 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
-import javax.swing.*;
-
-import com.mysql.jdbc.ResultSet;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import bdd.DatabaseManager;
-import network.*;
-import threads.*;
-
+import threads.ThreadManager;
 import users.UserManager;
 
 public class MainTruc {
@@ -25,22 +29,19 @@ public class MainTruc {
 	String[] usersToChoose;
 	JScrollPane jpLeft;
 	JScrollPane jpRight;
-	JTextArea rTxt, lTxt ;
+	JTextArea rTxt, lTxt;
 
-	String selectedUser = "TestBot" ;
+	String selectedUser = "TestBot";
 
-	
 	class Updater extends Thread {
 		public void run() {
 			while (true) {
 				try {
 
-					rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
-					rTxt.setCaretPosition(rTxt.getText().length()-1);
-					
+					rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
+					rTxt.setCaretPosition(rTxt.getText().length() - 1);
 
-					
-					Thread.sleep(2000) ;
+					Thread.sleep(2000);
 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -58,36 +59,33 @@ public class MainTruc {
 		done = new JButton("Done");
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
-		rTxt = new JTextArea(200,100); //lignes, colonnes
-		lTxt = new JTextArea(200,100);
-		
+		rTxt = new JTextArea(200, 100); // lignes, colonnes
+		lTxt = new JTextArea(200, 100);
 
 		interfaceFrame.setBounds(0, 0, 1000, 600);
 		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		interfaceFrame.add(splitPane);
 		interfaceFrame.setSize(450, 400);
 		interfaceFrame.getContentPane().setLayout(null);
 
-
-		rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
+		rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 
-		
 		// Left part
-		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jpLeft.setBounds(0, 70, 450, 465);
 		interfaceFrame.getContentPane().add(jpLeft);
-		
+
 		// Right part
-		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jpRight.setBounds(450, 70, 830, 410);
 		interfaceFrame.getContentPane().add(jpRight);
 
-		
-		
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
@@ -112,18 +110,16 @@ public class MainTruc {
 				msg.setText("");
 			}
 		});
-				
-				refresh.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {	
-						usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
-						//usrComboBox = new JComboBox<String>(usersToChoose);
-						usrComboBox.setModel(new DefaultComboBoxModel(usersToChoose));
-					}
-				});
+
+		refresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
+				usrComboBox.setModel(new DefaultComboBoxModel(usersToChoose));
+			}
+		});
 
 		// Creates the panel
 		panel = new JPanel();
-		
 
 		// Set bounds for every component
 		coUsr.setBounds(50, 10, 200, 50); // x, y, largeur, hauteur
@@ -144,7 +140,7 @@ public class MainTruc {
 		interfaceFrame.add(usrComboBox);
 		interfaceFrame.add(logOut);
 		interfaceFrame.add(refresh);
-		
+
 		interfaceFrame.getContentPane().add(jpLeft, BorderLayout.CENTER);
 		interfaceFrame.getContentPane().add(jpRight, BorderLayout.CENTER);
 
@@ -157,17 +153,18 @@ public class MainTruc {
 		interfaceFrame.repaint();
 
 	}
+	
 
 	public void run() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		interfaceFrame.setVisible(true);
-		Updater u = new Updater () ;
+		Updater u = new Updater();
 		u.start();
-		
+
 	}
 
 	public String getUserChoosen() {
 		return usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 	}
-	
+
 }

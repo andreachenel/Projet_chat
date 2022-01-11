@@ -165,8 +165,14 @@ public class DatabaseManager {
 			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='" + id1 + "' AND id2='" + id2
 					+ "') OR (id1='" + id2 + "' AND id2='" + id1 + "') ORDER BY time ASC");
 			while (resultSet.next()) {
-				result+=(resultSet.getString("id1") + " -> " + resultSet.getString("id2") + " at "
-						+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");		}
+				String sender = resultSet.getString("id1") ;
+				if (sender.equals(id1)) {
+					result+=("				"+ resultSet.getString("message") + " " + resultSet.getString("time") + "\n") ;
+				} else {
+					result+=(sender + " -> " + resultSet.getString("id2") + " at "
+							+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");	
+				}
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
