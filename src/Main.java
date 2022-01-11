@@ -16,6 +16,8 @@ public class Main {
 
 		InterfaceManager inter = new InterfaceManager();
 		inter.run();
+		
+	
 
 
 		// InterfaceConnexion connex = new InterfaceConnexion();

@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
 import javax.swing.*;
@@ -23,9 +25,8 @@ public class MainTruc {
 	JButton send, done, logOut, refresh;
 	JComboBox<String> usrComboBox;
 	String[] usersToChoose;
-	JScrollPane jpLeft;
-	JScrollPane jpRight;
-	JTextArea rTxt, lTxt ;
+	JScrollPane scroll;
+	JTextArea txt;
 
 	String selectedUser = "TestBot" ;
 
@@ -35,11 +36,8 @@ public class MainTruc {
 			while (true) {
 				try {
 
-					rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
-					rTxt.setCaretPosition(rTxt.getText().length()-1);
-					
-
-					
+					txt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
+					txt.setCaretPosition(txt.getText().length()-1);
 					Thread.sleep(2000) ;
 
 				} catch (InterruptedException e) {
@@ -58,34 +56,26 @@ public class MainTruc {
 		done = new JButton("Done");
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
-		rTxt = new JTextArea(200,100); //lignes, colonnes
-		lTxt = new JTextArea(200,100);
+		txt = new JTextArea(200,100); //lignes, colonnes
 		
 
-		interfaceFrame.setBounds(0, 0, 1000, 600);
+		interfaceFrame.setBounds(0, 0, 1000, 700);
 		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		JSplitPane splitPane = new JSplitPane();
-		interfaceFrame.add(splitPane);
-		interfaceFrame.setSize(450, 400);
+		
+		interfaceFrame.setSize(600, 600);
 		interfaceFrame.getContentPane().setLayout(null);
 
 
-		rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
+		txt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 
 		
-		// Left part
-		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		jpLeft.setBounds(0, 70, 450, 465);
-		interfaceFrame.getContentPane().add(jpLeft);
-		
-		// Right part
-		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		jpRight.setBounds(450, 70, 830, 410);
-		interfaceFrame.getContentPane().add(jpRight);
-
+		// Scroll part
+		scroll = new JScrollPane(txt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(30, 70, 1200, 420);
+		interfaceFrame.getContentPane().add(scroll);
 		
 		
 		done.addActionListener(new ActionListener() {
@@ -103,6 +93,20 @@ public class MainTruc {
 				interfaceFrame.dispose();
 			}
 		});
+		
+//		send.addKeyListener(new KeyAdapter() {
+//
+//			  public void keyPressed(KeyEvent e) {
+//			    if (e.getKeyCode()==KeyEvent.VK_ENTER){
+//			    	String message = msg.getText();
+//
+//					ThreadManager t = new ThreadManager();
+//					t.sendTo(selectedUser, message);
+//					msg.setText("");
+//			    }
+//			    }
+//			    });
+		
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
@@ -127,8 +131,8 @@ public class MainTruc {
 
 		// Set bounds for every component
 		coUsr.setBounds(50, 10, 200, 50); // x, y, largeur, hauteur
-		msg.setBounds(470, 500, 700, 20);
-		send.setBounds(1180, 500, 70, 20);
+		msg.setBounds(100, 250, 20, 400);
+		send.setBounds(1100, 520, 70, 20);
 		usrCh.setBounds(160, 150, 400, 100);
 		usrComboBox.setBounds(200, 20, 160, 30);
 		done.setBounds(400, 20, 80, 30);
@@ -145,8 +149,7 @@ public class MainTruc {
 		interfaceFrame.add(logOut);
 		interfaceFrame.add(refresh);
 		
-		interfaceFrame.getContentPane().add(jpLeft, BorderLayout.CENTER);
-		interfaceFrame.getContentPane().add(jpRight, BorderLayout.CENTER);
+		interfaceFrame.getContentPane().add(scroll, BorderLayout.CENTER);
 
 		interfaceFrame.getContentPane().add(panel, BorderLayout.CENTER);
 
