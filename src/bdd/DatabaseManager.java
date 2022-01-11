@@ -185,7 +185,6 @@ public class DatabaseManager {
 				if (resultSet.next()) {
 					id = resultSet.getString("id");
 				}
-				System.out.println("found id1 " + id + " for pseudo" + pseudo);
 			} else {
 				System.out.println("error : Pseudo " + pseudo + " not found in database");
 			}

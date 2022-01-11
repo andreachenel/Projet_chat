@@ -5,6 +5,8 @@ import java.awt.event.WindowListener;
 
 import bdd.DatabaseManager;
 import network.NetworkManager;
+import threads.ThreadManager;
+import threads.UDPListenThread;
 
 public class InterfaceManager {
 
@@ -26,6 +28,12 @@ public class InterfaceManager {
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
+				UDPListenThread ult = new UDPListenThread(NetworkManager.UDPListenPort);
+				ult.start();
+				
+				ThreadManager tm = new ThreadManager();
+				tm.start();
+				
 				inter.run();
 			}
 

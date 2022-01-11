@@ -2,8 +2,10 @@ import java.sql.SQLException;
 
 import bdd.DatabaseManager;
 import gui.InterfaceManager;
+import network.NetworkManager;
 import gui.*;
 import threads.ThreadManager;
+import threads.UDPListenThread;
 
 public class Main {
 
@@ -11,13 +13,10 @@ public class Main {
 
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
+
 		InterfaceManager inter = new InterfaceManager();
 		inter.run();
 
-//
-//		ThreadManager tm = new ThreadManager();
-//		DBM.printLoginTable();
-//		tm.sendTo("TestBot", "ça confctionne");
 
 		// InterfaceConnexion connex = new InterfaceConnexion();
 		// connex.run();

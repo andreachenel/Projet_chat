@@ -38,7 +38,8 @@ public class InterfaceConnexion {
 		enterId.setForeground(Color.WHITE);
 		enterPwd.setForeground(Color.WHITE);
 		connectedMessage.setForeground(Color.WHITE);
-
+		pseudoMessage.setForeground(Color.WHITE);
+		
 		// Create the panel
 		interfacePanel = new JPanel(null);
 
