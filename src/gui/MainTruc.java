@@ -3,12 +3,19 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
+import com.mysql.jdbc.ResultSet;
+
+import bdd.DatabaseManager;
+import network.*;
+import threads.*;
+
 import users.UserManager;
 
-public class MainInterface {
+public class MainTruc {
 	JFrame interfaceFrame;
 	JTextField msg;
 	JLabel coUsr, usrCh;
@@ -16,10 +23,12 @@ public class MainInterface {
 	JButton send, done, logOut, refresh;
 	JComboBox<String> usrComboBox;
 	String[] usersToChoose;
-	// JScrollPane scPane;
+	JScrollPane jpLeft;
+	JScrollPane jpRight;
+	JTextArea rTxt, lTxt ;
 	
 
-	public MainInterface() {
+	public MainTruc() {
 		interfaceFrame = new JFrame("Chat");
 		msg = new JTextField(10);
 		coUsr = new JLabel("Connected Users : ");
@@ -28,11 +37,39 @@ public class MainInterface {
 		done = new JButton("Done");
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
-		// scPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		rTxt = new JTextArea(200,100); //lignes, colonnes
+		lTxt = new JTextArea(200,100);
 		
 
-	//	interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		interfaceFrame.setBounds(0, 0, 1000, 600);
+		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		JSplitPane splitPane = new JSplitPane();
+		interfaceFrame.add(splitPane);
+		interfaceFrame.setSize(450, 400);
+		interfaceFrame.getContentPane().setLayout(null);
+		
+		ResultSet resultSet = (ResultSet) DatabaseManager.retrieveMessages ("Pierre", "TestBot");
+		try {
+			while (resultSet.next()) {
+				rTxt.append("	" + resultSet.getString("id1") + " -> " + resultSet.getString("id2") + " at "
+						+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");		}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		// Left part
+		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jpLeft.setBounds(0, 70, 450, 465);
+		interfaceFrame.getContentPane().add(jpLeft);
+		
+		// Right part
+		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jpRight.setBounds(450, 70, 830, 410);
+		interfaceFrame.getContentPane().add(jpRight);
 
+		
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 
@@ -52,25 +89,23 @@ public class MainInterface {
 		});
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				String message = msg.getText();
 			}
 		});
 
 		// Creates the panel
 		panel = new JPanel();
 		
-		//scPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		// Set bounds for every component
-		coUsr.setBounds(150, 10, 200, 80); // x, y, largeur, hauteur
-		msg.setBounds(650, 480, 500, 20);
-		send.setBounds(1180, 480, 70, 20);
+		coUsr.setBounds(50, 10, 200, 50); // x, y, largeur, hauteur
+		msg.setBounds(470, 500, 700, 20);
+		send.setBounds(1180, 500, 70, 20);
 		usrCh.setBounds(160, 150, 400, 100);
-		usrComboBox.setBounds(150, 100, 160, 30);
-		done.setBounds(190, 150, 80, 20);
-		logOut.setBounds(1100, 20, 100, 30);
-		refresh.setBounds(20, 20, 150, 30);
-		//scPane.setBounds(0, 0, 1300, 600);
+		usrComboBox.setBounds(200, 20, 160, 30);
+		done.setBounds(400, 20, 80, 30);
+		logOut.setBounds(1100, 20, 150, 30);
+		refresh.setBounds(800, 20, 150, 30);
 
 		// Add to the panel
 		interfaceFrame.add(coUsr);
@@ -82,9 +117,10 @@ public class MainInterface {
 		interfaceFrame.add(logOut);
 		interfaceFrame.add(refresh);
 		
+		interfaceFrame.getContentPane().add(jpLeft, BorderLayout.CENTER);
+		interfaceFrame.getContentPane().add(jpRight, BorderLayout.CENTER);
 
 		interfaceFrame.getContentPane().add(panel, BorderLayout.CENTER);
-		//interfaceFrame.getContentPane().add(scPane,BorderLayout.CENTER);
 
 		// Display the window
 		interfaceFrame.pack();
@@ -102,5 +138,5 @@ public class MainInterface {
 	public String getUserChoosen() {
 		return usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 	}
-
+	
 }

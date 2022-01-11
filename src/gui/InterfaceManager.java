@@ -16,7 +16,7 @@ public class InterfaceManager {
 		DBM.create();
 
 		System.out.println("je crée connex");
-		MainInterface inter = new MainInterface();
+		MainTruc inter = new MainTruc();   						// A changer
 
 		inter.interfaceFrame.revalidate();
 		inter.interfaceFrame.repaint();
@@ -26,7 +26,6 @@ public class InterfaceManager {
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				MainInterface inter = new MainInterface();
 				inter.run();
 			}
 

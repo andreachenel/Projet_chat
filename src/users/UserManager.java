@@ -42,7 +42,13 @@ public class UserManager {
 	}
 
 	public static String myPseudo() {
-		return UserTab.get(0).getPseudo();
+		String pseudo = "";
+		try {
+			pseudo = UserTab.get(0).getPseudo();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("usertab empty ! define mypseudo");
+		}
+		return pseudo ;
 	}
 
 	public static void addUser(String pseudo, String addr, int port) {

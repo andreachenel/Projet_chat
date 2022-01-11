@@ -175,7 +175,7 @@ public class DatabaseManager {
 		}
 	}
 
-	public ResultSet retrieveMessages(String id1, String id2) {
+	public static ResultSet retrieveMessages(String id1, String id2) {
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='" + id1 + "' AND id2='" + id2

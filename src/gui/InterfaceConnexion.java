@@ -22,6 +22,7 @@ public class InterfaceConnexion {
 	JButton loginButton, pseudoButton;
 	JPanel interfacePanel;
 	JLabel connectedMessage, enterId, enterPwd, errorMessage, pseudoMessage;
+	Color lilas;
 
 	public InterfaceConnexion() {
 		interfaceFrame = new JFrame("Log in");
@@ -33,11 +34,15 @@ public class InterfaceConnexion {
 		enterId = new JLabel("Identifiant");
 		enterPwd = new JLabel("Mot de passe");
 		pseudoMessage = new JLabel();
+		lilas = new Color(64,22,12);
+		enterId.setForeground(Color.WHITE);
+		enterPwd.setForeground(Color.WHITE);
+		connectedMessage.setForeground(Color.WHITE);
 
 		// Create the panel
 		interfacePanel = new JPanel(null);
 
-		interfacePanel.setBackground(Color.PINK);
+		interfacePanel.setBackground(lilas);
 
 		// Log in
 		loginButton = new JButton(new AbstractAction("Log in") {
@@ -66,6 +71,8 @@ public class InterfaceConnexion {
 					interfacePanel.add(pseudoField);
 					interfacePanel.add(pseudoButton);
 					loginButton.setEnabled(false);
+					idField.setEnabled(false);
+					pwdField.setEnabled(false);
 
 				} else {
 					errorMessage.setText("Erreur, identifiant ou mot de passe incorrect");
@@ -88,7 +95,7 @@ public class InterfaceConnexion {
 				interfacePanel.add(pseudoButton);
 
 				// broadcast a request to use pseudo. if valid, close the interface
-				if (NetworkManager.requestPseudo(pseudo) == 0) {
+				if (/*NetworkManager.requestPseudo(pseudo) == 0*/ true) {
 					pseudoMessage.setText("Pseudo ok");
 					pseudoButton.setText("Pseudo valide");
 					pseudoButton.setEnabled(false);
