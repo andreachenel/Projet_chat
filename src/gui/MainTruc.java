@@ -26,19 +26,22 @@ public class MainTruc {
 	JScrollPane jpLeft;
 	JScrollPane jpRight;
 	JTextArea rTxt, lTxt ;
+
 	String pseudo2 = "TestBot";
+
 	
 	class Updater extends Thread {
 		public void run() {
 			while (true) {
 				try {
-					rTxt.setText(DatabaseManager.retrieveMessages("" , pseudo2));
-					Thread.sleep(1000) ;
+
+					rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),pseudo2)) ;
+					rTxt.setCaretPosition(rTxt.getText().length()-1);
+					Thread.sleep(2000) ;
+
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
 //			rTxt.setCaretPosition(rTxt.getText().length() - 1);
 //			rTxt.update(rTxt.getGraphics());
@@ -104,7 +107,7 @@ public class MainTruc {
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
-				//DatabaseManager.newMessage(UserManager.myPseudo(), usrComboBox.getItemAt(usrComboBox.getSelectedIndex()),message);
+
 				ThreadManager t = new ThreadManager();
 				t.sendTo(pseudo2, message);
 				msg.setText("");

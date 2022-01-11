@@ -16,15 +16,7 @@ public class DatabaseManager {
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(req);
-			/*
-			 * System.out.println("login table :") ; while(resultSet.next()) { // iterate &
-			 * read the result set System.out.println("	id = " + resultSet.getString("id"));
-			 * System.out.println("	password = " + resultSet.getString("password"));
-			 * 
-			 * System.out.println("	currentPseudo = " +
-			 * resultSet.getString("currentPseudo")); }
-			 */
-			// statement.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -67,17 +59,6 @@ public class DatabaseManager {
 				statement = connection.createStatement();
 				statement.setQueryTimeout(5); // set timeout to 5sec.
 
-				// String ids [] = {"1","2","3","4","5"};
-				// String passwords [] = {"haha","hoho","hehe","hihi","James Bond"};
-
-				// for(int i=0;i<ids.length;i++){
-				// statement.executeUpdate("INSERT INTO login values(' "+ids[i]+"',
-				// '"+passwords[i]+"', 'a')");
-				// }
-
-				// statement.executeUpdate("UPDATE login SET id = 'Peter' WHERE id = 1");
-				// statement.executeUpdate("INSERT INTO login values(
-				// '"+UserManager.getMyID()+"' , 'mdp', 'Pierre'");
 				statement.close();
 			}
 
@@ -175,13 +156,14 @@ public class DatabaseManager {
 		}
 	}
 
-	public static String retrieveMessages(String id1, String id2) {
+	public static String retrieveMessages(String pseudo1, String pseudo2) {
 		String result = "" ;
+		String id1 = getId(pseudo1);
+		String id2 = getId(pseudo2);
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='" + id1 + "' AND id2='" + id2
 					+ "') OR (id1='" + id2 + "' AND id2='" + id1 + "') ORDER BY time ASC");
-			// statement.close();
 			while (resultSet.next()) {
 				result+=(resultSet.getString("id1") + " -> " + resultSet.getString("id2") + " at "
 						+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");		}
