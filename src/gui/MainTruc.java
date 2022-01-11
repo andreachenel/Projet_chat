@@ -27,7 +27,7 @@ public class MainTruc {
 	JScrollPane jpRight;
 	JTextArea rTxt, lTxt ;
 
-	String pseudo2 = "";
+	String selectedUser = "TestBot" ;
 
 	
 	class Updater extends Thread {
@@ -35,18 +35,17 @@ public class MainTruc {
 			while (true) {
 				try {
 
-					rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),pseudo2)) ;
+					rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
 					rTxt.setCaretPosition(rTxt.getText().length()-1);
+					
+
+					
 					Thread.sleep(2000) ;
 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-//			rTxt.setCaretPosition(rTxt.getText().length() - 1);
-//			rTxt.update(rTxt.getGraphics());
-//			interfaceFrame.revalidate();
-//			interfaceFrame.repaint();
 		}
 	}
 
@@ -72,7 +71,9 @@ public class MainTruc {
 		interfaceFrame.getContentPane().setLayout(null);
 
 
-		rTxt.setText(DatabaseManager.retrieveMessages("","TestBot")) ;
+		rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(),selectedUser)) ;
+		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
+		usrComboBox = new JComboBox<String>(usersToChoose);
 
 		
 		// Left part
@@ -86,15 +87,13 @@ public class MainTruc {
 		interfaceFrame.getContentPane().add(jpRight);
 
 		
-		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
-		usrComboBox = new JComboBox<String>(usersToChoose);
-
+		
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
-				panel.add(usrCh);
+				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 				usrCh.setText(selectedUser);
 				DatabaseManager.retrieveMessages(selectedUser, UserManager.myPseudo());
+				panel.add(usrCh);
 			}
 		});
 
@@ -109,13 +108,17 @@ public class MainTruc {
 				String message = msg.getText();
 
 				ThreadManager t = new ThreadManager();
-				t.sendTo(pseudo2, message);
+				t.sendTo(selectedUser, message);
 				msg.setText("");
 			}
 		});
 				
 				refresh.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {			}
+					public void actionPerformed(ActionEvent e) {	
+						usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
+						//usrComboBox = new JComboBox<String>(usersToChoose);
+						usrComboBox.setModel(new DefaultComboBoxModel(usersToChoose));
+					}
 				});
 
 		// Creates the panel
