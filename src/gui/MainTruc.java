@@ -48,6 +48,7 @@ public class MainTruc {
 		interfaceFrame.add(splitPane);
 		interfaceFrame.setSize(450, 400);
 		interfaceFrame.getContentPane().setLayout(null);
+
 		
 		ResultSet resultSet = (ResultSet) DatabaseManager.retrieveMessages ("Pierre", "TestBot");
 		try {
@@ -55,17 +56,18 @@ public class MainTruc {
 				rTxt.append("	" + resultSet.getString("id1") + " -> " + resultSet.getString("id2") + " at "
 						+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");		}
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		// Left part
-		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		lTxt.setAutoscrolls(true);
+		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jpLeft.setBounds(0, 70, 450, 465);
 		interfaceFrame.getContentPane().add(jpLeft);
 		
 		// Right part
-		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		rTxt.setAutoscrolls(true);
+		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jpRight.setBounds(450, 70, 830, 410);
 		interfaceFrame.getContentPane().add(jpRight);
 
@@ -75,9 +77,10 @@ public class MainTruc {
 
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String selectedUser = "You selected " + usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
+				String selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 				panel.add(usrCh);
 				usrCh.setText(selectedUser);
+				DatabaseManager.retrieveMessages(selectedUser, UserManager.myPseudo());
 			}
 		});
 
@@ -90,8 +93,14 @@ public class MainTruc {
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
+				DatabaseManager.newMessage(UserManager.myPseudo(), usrComboBox.getItemAt(usrComboBox.getSelectedIndex()),message);
+				msg.setText("");
 			}
 		});
+				
+				refresh.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {			}
+				});
 
 		// Creates the panel
 		panel = new JPanel();
