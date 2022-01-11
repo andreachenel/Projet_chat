@@ -14,21 +14,6 @@ public class Main {
 		InterfaceManager inter = new InterfaceManager();
 		inter.run();
 
-//		MainTruc mt = new MainTruc();
-//		mt.run();
-
-//		DBM.printLoginTable();
-		// DBM.printMessages();
-//		while (true) {
-//			try {
-//				Thread.sleep(5000);
-//				DatabaseManager.newMessage("Hi", "TestBot", "new");
-//				System.out.println(DatabaseManager.retrieveMessages("Pierre", "TestBot")) ;
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
-
 //
 //		ThreadManager tm = new ThreadManager();
 //		DBM.printLoginTable();

@@ -26,17 +26,19 @@ public class MainTruc {
 	JScrollPane jpLeft;
 	JScrollPane jpRight;
 	JTextArea rTxt, lTxt ;
+	String pseudo1 = "Hi";
+	String pseudo2= "TestBot";
 	
 	class Updater extends Thread {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(1000) ;
+					rTxt.setText(DatabaseManager.retrieveMessages(pseudo1,pseudo2)) ;
+					rTxt.setCaretPosition(rTxt.getText().length()-1);
+					Thread.sleep(2000) ;
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
 //			rTxt.setCaretPosition(rTxt.getText().length() - 1);
 //			rTxt.update(rTxt.getGraphics());
@@ -99,7 +101,6 @@ public class MainTruc {
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
-				rTxt.setText(DatabaseManager.retrieveMessages("Pierre","TestBot")) ;
 			}
 		});
 

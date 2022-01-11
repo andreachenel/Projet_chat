@@ -1,3 +1,4 @@
+import gui.MainTruc;
 import network.NetworkManager;
 import threads.ThreadManager;
 import threads.UDPListenThread;
@@ -16,6 +17,9 @@ public class TestMain {
 		// open UDP listener to handle new users & pseudo change requests
 		UDPListenThread list = new UDPListenThread(portRecep);
 		list.start();
+		
+		MainTruc mt = new MainTruc() ;
+		mt.run();
 
 		// open TCP Server to handle conversation requests
 		ThreadManager threadManager = new ThreadManager();
