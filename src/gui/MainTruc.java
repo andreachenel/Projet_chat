@@ -26,11 +26,13 @@ public class MainTruc {
 	JScrollPane jpLeft;
 	JScrollPane jpRight;
 	JTextArea rTxt, lTxt ;
+	String pseudo2 = "TestBot";
 	
 	class Updater extends Thread {
 		public void run() {
 			while (true) {
 				try {
+					rTxt.setText(DatabaseManager.retrieveMessages("" , pseudo2));
 					Thread.sleep(1000) ;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -67,17 +69,15 @@ public class MainTruc {
 		interfaceFrame.getContentPane().setLayout(null);
 
 
-		rTxt.setText(DatabaseManager.retrieveMessages("Pierre","TestBot")) ;
+		rTxt.setText(DatabaseManager.retrieveMessages("","TestBot")) ;
 
 		
 		// Left part
-		lTxt.setAutoscrolls(true);
 		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jpLeft.setBounds(0, 70, 450, 465);
 		interfaceFrame.getContentPane().add(jpLeft);
 		
 		// Right part
-		rTxt.setAutoscrolls(true);
 		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jpRight.setBounds(450, 70, 830, 410);
 		interfaceFrame.getContentPane().add(jpRight);
@@ -104,11 +104,10 @@ public class MainTruc {
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
-				DatabaseManager.newMessage(UserManager.myPseudo(), usrComboBox.getItemAt(usrComboBox.getSelectedIndex()),message);
+				//DatabaseManager.newMessage(UserManager.myPseudo(), usrComboBox.getItemAt(usrComboBox.getSelectedIndex()),message);
+				ThreadManager t = new ThreadManager();
+				t.sendTo(pseudo2, message);
 				msg.setText("");
-
-				rTxt.setText(DatabaseManager.retrieveMessages("Pierre","TestBot")) ;
-
 			}
 		});
 				

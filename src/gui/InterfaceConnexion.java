@@ -95,7 +95,7 @@ public class InterfaceConnexion {
 				interfacePanel.add(pseudoButton);
 
 				// broadcast a request to use pseudo. if valid, close the interface
-				if (/*NetworkManager.requestPseudo(pseudo) == 0*/ true) {
+				if (NetworkManager.requestPseudo(pseudo) == 0) {
 					pseudoMessage.setText("Pseudo ok");
 					pseudoButton.setText("Pseudo valide");
 					pseudoButton.setEnabled(false);
