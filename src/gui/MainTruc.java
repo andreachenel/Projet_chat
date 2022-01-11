@@ -27,7 +27,7 @@ public class MainTruc {
 	JScrollPane jpRight;
 	JTextArea rTxt, lTxt ;
 
-	String pseudo2 = "TestBot";
+	String pseudo2 = "";
 
 	
 	class Updater extends Thread {
