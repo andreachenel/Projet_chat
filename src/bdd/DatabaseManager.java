@@ -175,16 +175,21 @@ public class DatabaseManager {
 		}
 	}
 
-	public static ResultSet retrieveMessages(String id1, String id2) {
+	public static String retrieveMessages(String id1, String id2) {
+		String result = "" ;
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='" + id1 + "' AND id2='" + id2
 					+ "') OR (id1='" + id2 + "' AND id2='" + id1 + "') ORDER BY time ASC");
 			// statement.close();
+			while (resultSet.next()) {
+				result+=(resultSet.getString("id1") + " -> " + resultSet.getString("id2") + " at "
+						+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");		}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return resultSet;
+		return result;
 	}
 
 	public static String getId(String pseudo) {

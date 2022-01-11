@@ -13,38 +13,22 @@ public class Main {
 		DBM.create();
 		InterfaceManager inter = new InterfaceManager();
 		inter.run();
-		
+
 //		MainTruc mt = new MainTruc();
 //		mt.run();
 
-		String id1 = "TestBot";
-		String id2 = "Pierre";
-		String message = "omg";
-		// String upd = "INSERT INTO messages
-		// values('"+id1+"','"+id2+"','"+message+"','1')" ;
-		// DBM.update("DELETE FROM messages");
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-		DatabaseManager.newMessage("Hi", "TestBot", message);
-
 //		DBM.printLoginTable();
 		// DBM.printMessages();
-
-//		try {
-//			Thread.sleep(10000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
+//		while (true) {
+//			try {
+//				Thread.sleep(5000);
+//				DatabaseManager.newMessage("Hi", "TestBot", "new");
+//				System.out.println(DatabaseManager.retrieveMessages("Pierre", "TestBot")) ;
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 //		}
+
 //
 //		ThreadManager tm = new ThreadManager();
 //		DBM.printLoginTable();
