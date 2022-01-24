@@ -63,9 +63,10 @@ public class DatabaseManager {
 			}
 
 			catch (SQLException e) {
-				e.printStackTrace();
+				
+				System.out.println("Can't reach database ! Check connection");
+				System.exit(1);
 			}
-			printLoginTable();
 		}
 	}
 
@@ -121,7 +122,6 @@ public class DatabaseManager {
 
 			// if ID already in table, check if password is right
 			if (resultSet.next()) {
-				System.out.println("resultset not empty");
 				if (pwd.equals(resultSet.getString("password"))) {
 					result = true;
 					UserManager.setMyID(id);
@@ -156,28 +156,22 @@ public class DatabaseManager {
 		}
 	}
 
-	public static String retrieveMessages(String pseudo1, String pseudo2) {
-		String result = "" ;
+	public static ResultSet retrieveMessages(String pseudo1, String pseudo2) {
 		String id1 = getId(pseudo1);
 		String id2 = getId(pseudo2);
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='" + id1 + "' AND id2='" + id2
 					+ "') OR (id1='" + id2 + "' AND id2='" + id1 + "') ORDER BY time ASC");
-			while (resultSet.next()) {
-				String sender = resultSet.getString("id1") ;
-				if (sender.equals(id1)) {
-					result+=("				"+ resultSet.getString("message") + " " + resultSet.getString("time") + "\n") ;
-				} else {
-					result+=(sender + " -> " + resultSet.getString("id2") + " at "
-							+ resultSet.getString("time") + " : " + resultSet.getString("message") + "\n");	
-				}
-			}
+			
+			/*
+			
+			}*/
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return resultSet;
 	}
 
 	public static String getId(String pseudo) {

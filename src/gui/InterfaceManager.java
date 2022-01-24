@@ -17,7 +17,6 @@ public class InterfaceManager {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 
-		System.out.println("je crée connex");
 		MainTruc inter = new MainTruc();   						// A changer
 
 		inter.interfaceFrame.revalidate();

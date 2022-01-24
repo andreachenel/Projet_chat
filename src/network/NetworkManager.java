@@ -14,7 +14,6 @@ import users.UserManager;
 
 public class NetworkManager {
 
-	public static boolean receiveOk = false;
 	public static boolean pseudoOk = true;
 
 	// Useful ports for UDP & TCP communication
@@ -60,9 +59,9 @@ public class NetworkManager {
 
 		listener.close();
 
-		// Check conditions (has received something & has not received a denial) after
+		// Check if has not received a denial after
 		// some time
-		if (receiveOk && pseudoOk) {
+		if (pseudoOk) {
 			System.out.println("	-> Confirming pseudo " + pseudo);
 			Message confirmMessage = new Message(MessageType.CONFIRMPSEUDO, us);
 			UDPClientThread confirmClient = new UDPClientThread(confirmMessage, "255.255.255.255", UDPListenPort);
@@ -72,16 +71,12 @@ public class NetworkManager {
 			UserManager.insertUserAt(0, pseudo, NetworkManager.getLocalAddress(), TCPListenPort);
 			UserManager.printUserTab();
 			DatabaseManager.changePseudo(pseudo);
-			receiveOk = false;
 
 			return 0;
 
-		} else if (!receiveOk) {
-			System.out.println("Received nothing, check connection") ;
-			System.out.printf("Conditions pas ok : receiveOK %b pseudoOK %b\n", receiveOk, pseudoOk);
-			return -2;
 		} else {
 			System.out.printf("Name already taken !");
+			pseudoOk=true ;
 			return -1;
 		}
 	}

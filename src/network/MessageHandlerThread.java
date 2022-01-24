@@ -32,7 +32,6 @@ public class MessageHandlerThread extends Thread {
 		case AUTHORIZEPSEUDO:
 			System.out.println("					<- Pseudo OK du cote de " + us.getPseudo());
 			UserManager.addUser(us);
-			NetworkManager.receiveOk = true;
 			break;
 
 		case DENYPSEUDO:

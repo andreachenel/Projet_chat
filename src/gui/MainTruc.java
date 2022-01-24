@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -10,10 +11,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.mysql.jdbc.ResultSet;
 
 import bdd.DatabaseManager;
 import threads.ThreadManager;
@@ -22,20 +25,43 @@ import users.UserManager;
 public class MainTruc {
 	JFrame interfaceFrame;
 	JTextField msg;
-	JLabel coUsr, usrCh;
+	JLabel coUsr ;
 	JPanel panel;
-	JButton send, done, logOut, refresh;
+	JButton send, select, logOut, refresh;
 	JComboBox<String> usrComboBox;
 	String[] usersToChoose;
-	JScrollPane jpLeft;
-	JScrollPane jpRight;
-	JTextArea rTxt, lTxt;
+	JScrollPane scroll;
+	JTextArea txt;
 
 	String selectedUser = null ;
 	
 	private void updateConversation () {
-		rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
-		rTxt.setCaretPosition(rTxt.getText().length() - 1);
+		ResultSet rs = (ResultSet) DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser) ;
+		String result = "" ;
+		try {
+			while (rs.next()) {
+				String sender = rs.getString("id1") ;
+				
+				// if message sent by us, put it on the right in blue
+				if (sender.equals(UserManager.getMyID())) {
+					result+=(rs.getString("time")+"    								"+ rs.getString("message") + "\n") ;
+				
+					
+				// put it on the left in red
+				} else {
+					result+=(rs.getString("time")+"    "+ rs.getString("message") + "\n") ;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		txt.setText(result);
+	}
+	
+	private void updateConnectedUsers () {
+		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
+		usrComboBox.setModel(new DefaultComboBoxModel(usersToChoose));
 	}
 
 	class Updater extends Thread {
@@ -43,12 +69,10 @@ public class MainTruc {
 			while (true) {
 				try {
 					
-					usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
-					usrComboBox = new JComboBox<String>(usersToChoose);
-					
 					if (selectedUser!=null) {
 						updateConversation() ;
 					}
+
 
 					Thread.sleep(1000);
 
@@ -64,43 +88,35 @@ public class MainTruc {
 		msg = new JTextField(10);
 		coUsr = new JLabel("Connected Users : ");
 		send = new JButton("Send");
-		usrCh = new JLabel("User Choosen");
-		done = new JButton("Done");
+		select = new JButton("Select");
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
-		rTxt = new JTextArea(200, 100); // lignes, colonnes
-		lTxt = new JTextArea(200, 100);
 
-		interfaceFrame.setBounds(0, 0, 1000, 600);
+		txt = new JTextArea(200,100); //lignes, colonnes
+
+		interfaceFrame.setLayout(new BorderLayout());
+		//interfaceFrame.setBounds(0, 0, 1000, 700);
 		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-		JSplitPane splitPane = new JSplitPane();
-		interfaceFrame.add(splitPane);
-		interfaceFrame.setSize(450, 400);
 		interfaceFrame.getContentPane().setLayout(null);
 
-		// rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
-		rTxt.setText("Choose a user");
+
+		txt.setText("Choose a user") ;
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 
-		// Left part
-		jpLeft = new JScrollPane(lTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		jpLeft.setBounds(0, 70, 450, 465);
-		interfaceFrame.getContentPane().add(jpLeft);
+		
+		// Scroll part
+		scroll = new JScrollPane(txt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBounds(30, 70, 1200, 420);
+		interfaceFrame.getContentPane().add(scroll);
+		
+		
 
-		// Right part
-		jpRight = new JScrollPane(rTxt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		jpRight.setBounds(450, 70, 830, 410);
-		interfaceFrame.getContentPane().add(jpRight);
-
-		done.addActionListener(new ActionListener() {
+		select.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
-				usrCh.setText(selectedUser);
-				panel.add(usrCh);
+				txt.setCaretPosition(txt.getText().length() - 1);
 			}
 		});
 
@@ -110,6 +126,27 @@ public class MainTruc {
 				interfaceFrame.dispose();
 			}
 		});
+		
+		refresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateConnectedUsers() ;
+				txt.setCaretPosition(txt.getText().length() - 1);
+			}
+		});
+		
+//		send.addKeyListener(new KeyAdapter() {
+//
+//			  public void keyPressed(KeyEvent e) {
+//			    if (e.getKeyCode()==KeyEvent.VK_ENTER){
+//			    	String message = msg.getText();
+//
+//					ThreadManager t = new ThreadManager();
+//					t.sendTo(selectedUser, message);
+//					msg.setText("");
+//			    }
+//			    }
+//			    });
+		
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
@@ -120,47 +157,38 @@ public class MainTruc {
 			}
 		});
 
-		refresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
-				usrComboBox.setModel(new DefaultComboBoxModel(usersToChoose));
-			}
-		});
-
 		// Creates the panel
 		panel = new JPanel();
 
 		// Set bounds for every component
 		coUsr.setBounds(50, 10, 200, 50); // x, y, largeur, hauteur
-		msg.setBounds(470, 500, 700, 20);
-		send.setBounds(1180, 500, 70, 20);
-		usrCh.setBounds(160, 150, 400, 100);
+		msg.setBounds(100, 520, 1000, 20);
+		send.setBounds(1100, 520, 70, 20);
 		usrComboBox.setBounds(200, 20, 160, 30);
-		done.setBounds(400, 20, 80, 30);
+		select.setBounds(400, 20, 80, 30);
 		logOut.setBounds(1100, 20, 150, 30);
-		refresh.setBounds(800, 20, 150, 30);
+		refresh.setBounds(800,20,150,30);
 
 		// Add to the panel
 		interfaceFrame.add(coUsr);
 		interfaceFrame.add(msg);
 		interfaceFrame.add(send);
-		interfaceFrame.add(usrCh);
-		interfaceFrame.add(done);
+		interfaceFrame.add(select);
 		interfaceFrame.add(usrComboBox);
-		interfaceFrame.add(logOut);
 		interfaceFrame.add(refresh);
+		interfaceFrame.add(logOut);
 
-		interfaceFrame.getContentPane().add(jpLeft, BorderLayout.CENTER);
-		interfaceFrame.getContentPane().add(jpRight, BorderLayout.CENTER);
-
+		interfaceFrame.getContentPane().add(scroll, BorderLayout.CENTER);
 		interfaceFrame.getContentPane().add(panel, BorderLayout.CENTER);
+		//interfaceFrame.pack();
 
 		// Display the window
 		interfaceFrame.pack();
-		interfaceFrame.setSize(1300, 600); // largeur, hauteur
+		interfaceFrame.setSize(1300, 600);
 		interfaceFrame.revalidate();
 		interfaceFrame.repaint();
 
+		
 	}
 	
 

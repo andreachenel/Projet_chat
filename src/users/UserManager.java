@@ -10,8 +10,9 @@ public class UserManager {
 
 	public static ArrayList<String> pseudoTab() {
 		ArrayList<String> pseudoTab = new ArrayList<String>();
-		for (User u : UserTab) {
-			pseudoTab.add(u.getPseudo());
+		boolean first = true ;
+		for (int i=1; i<UserTab.size(); i++) {
+			pseudoTab.add(UserTab.get(i).getPseudo());
 		}
 		return pseudoTab;
 	}

@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -23,7 +24,7 @@ public class InterfaceConnexion {
 	JButton loginButton, pseudoButton;
 	JPanel interfacePanel;
 	JLabel connectedMessage, enterId, enterPwd, errorMessage, pseudoMessage;
-	Color lilas;
+	Color bordeaux;
 
 	public InterfaceConnexion() {
 		interfaceFrame = new JFrame("Log in");
@@ -35,7 +36,7 @@ public class InterfaceConnexion {
 		enterId = new JLabel("Identifiant");
 		enterPwd = new JLabel("Mot de passe");
 		pseudoMessage = new JLabel();
-		lilas = new Color(64,22,12);
+		bordeaux = new Color(64,22,12);
 		enterId.setForeground(Color.WHITE);
 		enterPwd.setForeground(Color.WHITE);
 		connectedMessage.setForeground(Color.WHITE);
@@ -44,7 +45,7 @@ public class InterfaceConnexion {
 		// Create the panel
 		interfacePanel = new JPanel(null);
 
-		interfacePanel.setBackground(lilas);
+		interfacePanel.setBackground(bordeaux);
 
 		// Log in
 		loginButton = new JButton(new AbstractAction("Log in") {
