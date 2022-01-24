@@ -31,17 +31,22 @@ public class MainTruc {
 	JScrollPane jpRight;
 	JTextArea rTxt, lTxt;
 
-	String selectedUser = "TestBot";
+	String selectedUser = null ;
 
 	class Updater extends Thread {
 		public void run() {
 			while (true) {
 				try {
+					
+					usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
+					usrComboBox = new JComboBox<String>(usersToChoose);
+					
+					if (selectedUser!=null) {
+						rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
+						rTxt.setCaretPosition(rTxt.getText().length() - 1);
+					}
 
-					rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
-					rTxt.setCaretPosition(rTxt.getText().length() - 1);
-
-					Thread.sleep(2000);
+					Thread.sleep(1000);
 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -70,7 +75,8 @@ public class MainTruc {
 		interfaceFrame.setSize(450, 400);
 		interfaceFrame.getContentPane().setLayout(null);
 
-		rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
+		// rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
+		rTxt.setText("Choose a user");
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 
@@ -90,7 +96,6 @@ public class MainTruc {
 			public void actionPerformed(ActionEvent e) {
 				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 				usrCh.setText(selectedUser);
-				DatabaseManager.retrieveMessages(selectedUser, UserManager.myPseudo());
 				panel.add(usrCh);
 			}
 		});

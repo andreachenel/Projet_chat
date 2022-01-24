@@ -10,8 +10,8 @@ public class Main {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 
-//		InterfaceManager inter = new InterfaceManager();
-//		inter.run();
+		InterfaceManager inter = new InterfaceManager();
+		inter.run();
 
 	}
 }

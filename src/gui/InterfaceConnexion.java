@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import bdd.DatabaseManager;
 import network.NetworkManager;
+import users.UserManager;
 
 public class InterfaceConnexion {
 	JFrame interfaceFrame;
@@ -78,6 +79,7 @@ public class InterfaceConnexion {
 				} else {
 					errorMessage.setText("Erreur, identifiant ou mot de passe incorrect");
 					loginButton.setText("Not connected");
+					
 				}
 				interfaceFrame.revalidate();
 				interfaceFrame.repaint();
@@ -96,16 +98,28 @@ public class InterfaceConnexion {
 				interfacePanel.add(pseudoButton);
 
 				// broadcast a request to use pseudo. if valid, close the interface
-				if (NetworkManager.requestPseudo(pseudo) == 0) {
+				int requestResult = NetworkManager.requestPseudo(pseudo) ;
+				if (requestResult==0) {
 					pseudoMessage.setText("Pseudo ok");
 					pseudoButton.setText("Pseudo valide");
 					pseudoButton.setEnabled(false);
 					interfaceFrame.setVisible(false);
 					interfaceFrame.dispose();
 
-				} else {
+				} else if (requestResult==-1){
 					pseudoMessage.setText("Pseudo indisponible");
 					pseudoButton.setText("Pseudo invalide");
+				} else {
+					pseudoMessage.setText("Not connected");
+					
+					/*
+					// bypass connection (for testing purposes)
+					UserManager.insertUserAt(0, pseudo, NetworkManager.getLocalAddress(), NetworkManager.TCPListenPort);
+					DatabaseManager.changePseudo(pseudo);
+					interfaceFrame.setVisible(false);
+					interfaceFrame.dispose();*/
+					
+				
 				}
 
 				interfaceFrame.revalidate();

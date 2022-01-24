@@ -76,8 +76,12 @@ public class NetworkManager {
 
 			return 0;
 
-		} else {
+		} else if (!receiveOk) {
+			System.out.println("Received nothing, check connection") ;
 			System.out.printf("Conditions pas ok : receiveOK %b pseudoOK %b\n", receiveOk, pseudoOk);
+			return -2;
+		} else {
+			System.out.printf("Name already taken !");
 			return -1;
 		}
 	}
