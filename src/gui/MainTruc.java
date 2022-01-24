@@ -32,6 +32,11 @@ public class MainTruc {
 	JTextArea rTxt, lTxt;
 
 	String selectedUser = null ;
+	
+	private void updateConversation () {
+		rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
+		rTxt.setCaretPosition(rTxt.getText().length() - 1);
+	}
 
 	class Updater extends Thread {
 		public void run() {
@@ -42,8 +47,7 @@ public class MainTruc {
 					usrComboBox = new JComboBox<String>(usersToChoose);
 					
 					if (selectedUser!=null) {
-						rTxt.setText(DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser));
-						rTxt.setCaretPosition(rTxt.getText().length() - 1);
+						updateConversation() ;
 					}
 
 					Thread.sleep(1000);
