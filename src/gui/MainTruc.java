@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
@@ -11,12 +12,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.mysql.jdbc.ResultSet;
 
 import bdd.DatabaseManager;
 import threads.ThreadManager;
@@ -67,8 +65,7 @@ public class MainTruc {
 	class Updater extends Thread {
 		public void run() {
 			while (true) {
-				try {
-					
+				try {	
 					if (selectedUser!=null) {
 						updateConversation() ;
 					}
@@ -94,14 +91,20 @@ public class MainTruc {
 
 		txt = new JTextArea(200,100); //lignes, colonnes
 
+
 		interfaceFrame.setLayout(new BorderLayout());
 		//interfaceFrame.setBounds(0, 0, 1000, 700);
 		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
 		interfaceFrame.getContentPane().setLayout(null);
 
 
 		txt.setText("Choose a user") ;
+
+		
+		
+		interfaceFrame.setSize(600, 600);
+		interfaceFrame.getContentPane().setLayout(null);
+
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 
@@ -110,7 +113,6 @@ public class MainTruc {
 		scroll = new JScrollPane(txt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBounds(30, 70, 1200, 420);
 		interfaceFrame.getContentPane().add(scroll);
-		
 		
 
 		select.addActionListener(new ActionListener() {
@@ -133,19 +135,6 @@ public class MainTruc {
 				txt.setCaretPosition(txt.getText().length() - 1);
 			}
 		});
-		
-//		send.addKeyListener(new KeyAdapter() {
-//
-//			  public void keyPressed(KeyEvent e) {
-//			    if (e.getKeyCode()==KeyEvent.VK_ENTER){
-//			    	String message = msg.getText();
-//
-//					ThreadManager t = new ThreadManager();
-//					t.sendTo(selectedUser, message);
-//					msg.setText("");
-//			    }
-//			    }
-//			    });
 		
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
