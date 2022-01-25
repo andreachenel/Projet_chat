@@ -87,6 +87,7 @@ public class MainTruc {
 		select = new JButton("Select");
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
+		send.setEnabled(false);		
 
 		txt = new JTextArea(200, 100); // lignes, colonnes
 
@@ -113,6 +114,7 @@ public class MainTruc {
 			public void actionPerformed(ActionEvent e) {
 				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 				txt.setCaretPosition(txt.getText().length() - 1);
+				send.setEnabled(true);		
 			}
 		});
 
