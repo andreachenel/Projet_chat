@@ -43,10 +43,13 @@ public class ThreadManager extends Thread {
 		}
 	}
 
-	public void sendTo(String pseudo, String message) {
+	public int sendTo(String pseudo, String message) {
 		String addr = UserManager.userAddress(pseudo);
 		if (!addr.equals("")) {
 			send(addr, message);
+			return 0 ;
+		} else {
+			return -1 ;
 		}
 	}
 
