@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -96,6 +97,7 @@ public class MainTruc {
 		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		interfaceFrame.getContentPane().setLayout(null);
 
+		txt.setFont(new Font("Serif", Font.PLAIN, 25));
 		txt.setText("Choose a user");
 
 		interfaceFrame.setSize(600, 600);
@@ -113,6 +115,7 @@ public class MainTruc {
 		select.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
+				txt.setFont(new Font("Serif", Font.PLAIN, 15));
 				txt.setCaretPosition(txt.getText().length() - 1);
 				send.setEnabled(true);		
 			}
