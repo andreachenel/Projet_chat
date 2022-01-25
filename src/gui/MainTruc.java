@@ -59,7 +59,7 @@ public class MainTruc {
 
 	private void updateConnectedUsers() {
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
-		usrComboBox.setModel(new DefaultComboBoxModel(usersToChoose));
+		usrComboBox.setModel(new DefaultComboBoxModel<String>(usersToChoose));
 	}
 
 	class Updater extends Thread {
@@ -135,8 +135,14 @@ public class MainTruc {
 				String message = msg.getText();
 
 				ThreadManager t = new ThreadManager();
-				t.sendTo(selectedUser, message);
-				msg.setText("");
+				if (t.sendTo(selectedUser, message)==0) {
+					msg.setText("");					
+				} else {
+					txt.setText("User "+selectedUser+" disconnected ! Choose another user");
+					selectedUser=null ;
+					updateConnectedUsers();
+					
+				}
 			}
 		});
 
@@ -150,7 +156,7 @@ public class MainTruc {
 		usrComboBox.setBounds(200, 20, 160, 30);
 		select.setBounds(400, 20, 80, 30);
 		logOut.setBounds(1100, 20, 150, 30);
-		refresh.setBounds(800, 20, 150, 30);
+		refresh.setBounds(500, 20, 150, 30);
 
 		// Add to the panel
 		interfaceFrame.add(coUsr);
