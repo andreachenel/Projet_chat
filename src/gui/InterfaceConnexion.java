@@ -41,6 +41,7 @@ public class InterfaceConnexion {
 		enterPwd.setForeground(Color.WHITE);
 		connectedMessage.setForeground(Color.WHITE);
 		pseudoMessage.setForeground(Color.WHITE);
+		errorMessage.setForeground(Color.WHITE);
 
 		// Create the panel
 		interfacePanel = new JPanel(null);
@@ -49,7 +50,6 @@ public class InterfaceConnexion {
 
 		// Log in
 		loginButton.addActionListener(new ActionListener() {
-			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent event) {
 
@@ -58,30 +58,31 @@ public class InterfaceConnexion {
 
 				errorMessage.setText("");
 				connectedMessage.setText("");
-				boolean eq = false;
+				int eq = -1;
 				try {
 					eq = DatabaseManager.verifyLogin(log, pwd);
-					System.out.println(Boolean.toString(eq));
+					System.out.println("verifylogin result : "+ Integer.toString(eq));
 				} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-					errorMessage.setText("Error, incorrect username or password");
+					errorMessage.setText("Unknown error");
 				}
 
-				if (eq) // L'ID et le mot de passe concordent
-				{
-
-					loginButton.setText("CONNECTED");
+				if (eq==-1) {
+					errorMessage.setText("Error, incorrect password");
+					loginButton.setText("Not connected");					
+				} else {
+					if (eq==0) {
+						loginButton.setText("CONNECTED");						
+					} else {
+						errorMessage.setText("Unknown ID - new account created !") ;
+					}
 					connectedMessage.setText("Successful connection ! Choose a pseudo :");
 					interfacePanel.add(pseudoField);
 					interfacePanel.add(pseudoButton);
 					loginButton.setEnabled(false);
 					idField.setEnabled(false);
-					pwdField.setEnabled(false);
-
-				} else {
-					errorMessage.setText("Error, incorrect username or passwor");
-					loginButton.setText("Not connected");
-
+					pwdField.setEnabled(false);					
 				}
+
 				interfaceFrame.revalidate();
 				interfaceFrame.repaint();
 			}
@@ -94,7 +95,7 @@ public class InterfaceConnexion {
 
 			public void actionPerformed(ActionEvent event) {
 				String pseudo = pseudoField.getText();
-				https: // start.ubuntu-mate.org/
+				//https: // start.ubuntu-mate.org/
 
 				interfacePanel.add(pseudoButton);
 
@@ -135,7 +136,7 @@ public class InterfaceConnexion {
 		pwdField.setBounds(180, 100, 150, 20);
 		loginButton.setBounds(180, 150, 150, 20);
 		pseudoField.setBounds(180, 250, 150, 20);
-		connectedMessage.setBounds(350, 150, 500, 30);
+		connectedMessage.setBounds(350, 180, 500, 30);
 		errorMessage.setBounds(350, 150, 500, 30);
 		pseudoMessage.setBounds(350, 300, 150, 20);
 		pseudoField.setBounds(180, 250, 150, 20);

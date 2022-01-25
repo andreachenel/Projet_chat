@@ -13,11 +13,11 @@ public class InterfaceManager {
 	public InterfaceManager() {
 	}
 
-	static public void run() {
+	public void run() {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 
-		MainTruc inter = new MainTruc();   						// A changer
+		MainTruc inter = new MainTruc(); // A changer
 
 		inter.interfaceFrame.revalidate();
 		inter.interfaceFrame.repaint();
@@ -29,10 +29,10 @@ public class InterfaceManager {
 			public void windowClosed(WindowEvent arg0) {
 				UDPListenThread ult = new UDPListenThread(NetworkManager.UDPListenPort);
 				ult.start();
-				
+
 				ThreadManager tm = new ThreadManager();
 				tm.start();
-				
+
 				inter.run();
 			}
 

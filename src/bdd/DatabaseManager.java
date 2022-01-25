@@ -1,10 +1,15 @@
 package bdd;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
+
 import users.UserManager;
 
 public class DatabaseManager {
@@ -63,7 +68,7 @@ public class DatabaseManager {
 			}
 
 			catch (SQLException e) {
-				
+
 				System.out.println("Can't reach database ! Check connection");
 				System.exit(1);
 			}
@@ -113,8 +118,8 @@ public class DatabaseManager {
 		}
 	}
 
-	public static boolean verifyLogin(String id, String pwd) {
-		boolean result = false;
+	public static int verifyLogin(String id, String pwd) {
+		int result = -1 ;
 		try {
 			statement = connection.createStatement();
 			String req = "SELECT id, password from login WHERE id='" + id + "'";
@@ -123,14 +128,14 @@ public class DatabaseManager {
 			// if ID already in table, check if password is right
 			if (resultSet.next()) {
 				if (pwd.equals(resultSet.getString("password"))) {
-					result = true;
+					result = 0;
 					UserManager.setMyID(id);
 				}
 
 				// if ID not in table, create a new entry
 			} else {
 				statement.executeUpdate("INSERT INTO login values('" + id + "', '" + pwd + "', '')");
-				result = true;
+				result = -2 ;
 				UserManager.setMyID(id);
 				System.out.println("New user ! entry created in login database");
 			}
@@ -163,11 +168,12 @@ public class DatabaseManager {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * from messages WHERE (id1='" + id1 + "' AND id2='" + id2
 					+ "') OR (id1='" + id2 + "' AND id2='" + id1 + "') ORDER BY time ASC");
-			
+
 			/*
-			
-			}*/
-			
+			 * 
+			 * }
+			 */
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

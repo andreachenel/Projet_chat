@@ -2,7 +2,8 @@ package network;
 
 import threads.ThreadManager;
 import threads.UDPClientThread;
-import users.*;
+import users.User;
+import users.UserManager;
 
 public class MessageHandlerThread extends Thread {
 	private Message received;

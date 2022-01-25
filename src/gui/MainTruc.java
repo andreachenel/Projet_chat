@@ -23,7 +23,7 @@ import users.UserManager;
 public class MainTruc {
 	JFrame interfaceFrame;
 	JTextField msg;
-	JLabel coUsr ;
+	JLabel coUsr;
 	JPanel panel;
 	JButton send, select, logOut, refresh;
 	JComboBox<String> usrComboBox;
@@ -31,23 +31,23 @@ public class MainTruc {
 	JScrollPane scroll;
 	JTextArea txt;
 
-	String selectedUser = null ;
-	
-	private void updateConversation () {
-		ResultSet rs = (ResultSet) DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser) ;
-		String result = "" ;
+	String selectedUser = null;
+
+	private void updateConversation() {
+		ResultSet rs = (ResultSet) DatabaseManager.retrieveMessages(UserManager.myPseudo(), selectedUser);
+		String result = "";
 		try {
 			while (rs.next()) {
-				String sender = rs.getString("id1") ;
-				
+				String sender = rs.getString("id1");
+
 				// if message sent by us, put it on the right in blue
 				if (sender.equals(UserManager.getMyID())) {
-					result+=(rs.getString("time")+"    								"+ rs.getString("message") + "\n") ;
-				
-					
-				// put it on the left in red
+					result += (rs.getString("time") + "    								" + rs.getString("message")
+							+ "\n");
+
+					// put it on the left in red
 				} else {
-					result+=(rs.getString("time")+"    "+ rs.getString("message") + "\n") ;
+					result += (rs.getString("time") + "    " + rs.getString("message") + "\n");
 				}
 			}
 		} catch (SQLException e) {
@@ -56,8 +56,8 @@ public class MainTruc {
 		}
 		txt.setText(result);
 	}
-	
-	private void updateConnectedUsers () {
+
+	private void updateConnectedUsers() {
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox.setModel(new DefaultComboBoxModel(usersToChoose));
 	}
@@ -65,11 +65,10 @@ public class MainTruc {
 	class Updater extends Thread {
 		public void run() {
 			while (true) {
-				try {	
-					if (selectedUser!=null) {
-						updateConversation() ;
+				try {
+					if (selectedUser != null) {
+						updateConversation();
 					}
-
 
 					Thread.sleep(1000);
 
@@ -89,31 +88,26 @@ public class MainTruc {
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
 
-		txt = new JTextArea(200,100); //lignes, colonnes
-
+		txt = new JTextArea(200, 100); // lignes, colonnes
 
 		interfaceFrame.setLayout(new BorderLayout());
-		//interfaceFrame.setBounds(0, 0, 1000, 700);
+		// interfaceFrame.setBounds(0, 0, 1000, 700);
 		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		interfaceFrame.getContentPane().setLayout(null);
 
+		txt.setText("Choose a user");
 
-		txt.setText("Choose a user") ;
-
-		
-		
 		interfaceFrame.setSize(600, 600);
 		interfaceFrame.getContentPane().setLayout(null);
 
 		usersToChoose = UserManager.pseudoTab().toArray(new String[UserManager.pseudoTab().size()]);
 		usrComboBox = new JComboBox<String>(usersToChoose);
 
-		
 		// Scroll part
-		scroll = new JScrollPane(txt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll = new JScrollPane(txt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBounds(30, 70, 1200, 420);
 		interfaceFrame.getContentPane().add(scroll);
-		
 
 		select.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,14 +122,14 @@ public class MainTruc {
 				interfaceFrame.dispose();
 			}
 		});
-		
+
 		refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateConnectedUsers() ;
+				updateConnectedUsers();
 				txt.setCaretPosition(txt.getText().length() - 1);
 			}
 		});
-		
+
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
@@ -156,7 +150,7 @@ public class MainTruc {
 		usrComboBox.setBounds(200, 20, 160, 30);
 		select.setBounds(400, 20, 80, 30);
 		logOut.setBounds(1100, 20, 150, 30);
-		refresh.setBounds(800,20,150,30);
+		refresh.setBounds(800, 20, 150, 30);
 
 		// Add to the panel
 		interfaceFrame.add(coUsr);
@@ -169,7 +163,7 @@ public class MainTruc {
 
 		interfaceFrame.getContentPane().add(scroll, BorderLayout.CENTER);
 		interfaceFrame.getContentPane().add(panel, BorderLayout.CENTER);
-		//interfaceFrame.pack();
+		// interfaceFrame.pack();
 
 		// Display the window
 		interfaceFrame.pack();
@@ -177,9 +171,7 @@ public class MainTruc {
 		interfaceFrame.revalidate();
 		interfaceFrame.repaint();
 
-		
 	}
-	
 
 	public void run() {
 		JFrame.setDefaultLookAndFeelDecorated(true);

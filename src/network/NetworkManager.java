@@ -5,8 +5,8 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
-import bdd.DatabaseManager;
 
+import bdd.DatabaseManager;
 import threads.UDPClientThread;
 import threads.UDPListenThread;
 import users.User;
@@ -76,7 +76,7 @@ public class NetworkManager {
 
 		} else {
 			System.out.printf("Name already taken !");
-			pseudoOk=true ;
+			pseudoOk = true;
 			return -1;
 		}
 	}

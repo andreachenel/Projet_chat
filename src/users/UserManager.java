@@ -1,7 +1,6 @@
 package users;
 
 import java.util.ArrayList;
-import network.NetworkManager;
 
 public class UserManager {
 
@@ -10,8 +9,7 @@ public class UserManager {
 
 	public static ArrayList<String> pseudoTab() {
 		ArrayList<String> pseudoTab = new ArrayList<String>();
-		boolean first = true ;
-		for (int i=1; i<UserTab.size(); i++) {
+		for (int i = 1; i < UserTab.size(); i++) {
 			pseudoTab.add(UserTab.get(i).getPseudo());
 		}
 		return pseudoTab;
@@ -49,7 +47,7 @@ public class UserManager {
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("usertab empty ! define mypseudo");
 		}
-		return pseudo ;
+		return pseudo;
 	}
 
 	public static void addUser(String pseudo, String addr, int port) {
