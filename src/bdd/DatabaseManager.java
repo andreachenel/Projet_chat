@@ -84,23 +84,6 @@ public class DatabaseManager {
 		}
 	}
 
-	public void printLoginTable() {
-		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * from login");
-			System.out.println("login table :");
-			while (resultSet.next()) {
-				// iterate & read the result set
-				System.out.println("	id = " + resultSet.getString("id"));
-				System.out.println("	password = " + resultSet.getString("password"));
-				System.out.println("	currentPseudo = " + resultSet.getString("currentPseudo"));
-			}
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static void changePseudo(String pseudo) {
 		String myID = UserManager.getMyID();
 		if (myID != null) {
@@ -145,20 +128,6 @@ public class DatabaseManager {
 		}
 
 		return result;
-	}
-
-	public void printMessages() {
-		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * from messages ORDER BY time ASC");
-			System.out.println("messages :");
-			while (resultSet.next()) {
-				System.out.println("	" + resultSet.getString("id1") + " -> " + resultSet.getString("id2") + " at "
-						+ resultSet.getString("time") + " : " + resultSet.getString("message"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static ResultSet retrieveMessages(String pseudo1, String pseudo2) {
@@ -220,11 +189,6 @@ public class DatabaseManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static boolean checkID(String ID) {
-
-		return false;
 	}
 
 }

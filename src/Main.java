@@ -15,11 +15,3 @@ public class Main {
 
 	}
 }
-
-// notes sur respect MVC : 
-//	- 
-//	- send devrait être dans NetworkManager
-//  - L'interface ne peut pas appeler databaseManager (model) : passer par networkmanager (controller)
-//	- MODEL : databaseManager, userManager
-// 	- CONTROLLER : 
-// 	- VIEW :
