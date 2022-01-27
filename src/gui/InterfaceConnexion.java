@@ -147,7 +147,6 @@ public class InterfaceConnexion {
 
 		interfacePanel.add(pwdField);
 		interfacePanel.add(enterId);
-		;
 		interfaceFrame.repaint();
 		interfacePanel.add(enterPwd);
 		interfacePanel.add(loginButton);

@@ -26,7 +26,7 @@ public class MainTruc {
 	JTextField msg;
 	JLabel coUsr;
 	JPanel panel;
-	JButton send, select, logOut, refresh;
+	JButton send, select, logOut, refresh, pseudoCh;
 	JComboBox<String> usrComboBox;
 	String[] usersToChoose;
 	JScrollPane scroll;
@@ -88,12 +88,12 @@ public class MainTruc {
 		select = new JButton("Select");
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
-		send.setEnabled(false);		
+		send.setEnabled(false);	
+		pseudoCh = new JButton("Change pseudo");
 
 		txt = new JTextArea(200, 100); // lignes, colonnes
 
 		interfaceFrame.setLayout(new BorderLayout());
-		// interfaceFrame.setBounds(0, 0, 1000, 700);
 		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		interfaceFrame.getContentPane().setLayout(null);
 
@@ -134,6 +134,12 @@ public class MainTruc {
 				txt.setCaretPosition(txt.getText().length() - 1);
 			}
 		});
+		pseudoCh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PseudoInterface pi = new PseudoInterface();
+				pi.run();
+			}
+		});
 
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,6 +168,7 @@ public class MainTruc {
 		select.setBounds(400, 20, 80, 30);
 		logOut.setBounds(1100, 20, 150, 30);
 		refresh.setBounds(500, 20, 150, 30);
+		pseudoCh.setBounds(700, 20, 150, 30);
 
 		// Add to the panel
 		interfaceFrame.add(coUsr);
@@ -171,6 +178,7 @@ public class MainTruc {
 		interfaceFrame.add(usrComboBox);
 		interfaceFrame.add(refresh);
 		interfaceFrame.add(logOut);
+		interfaceFrame.add(pseudoCh);
 
 		interfaceFrame.getContentPane().add(scroll, BorderLayout.CENTER);
 		interfaceFrame.getContentPane().add(panel, BorderLayout.CENTER);
