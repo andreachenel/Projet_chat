@@ -36,10 +36,6 @@ public class UserManager {
 
 	}
 
-	public static User findMe() {
-		return UserTab.get(0);
-	}
-
 	public static String myPseudo() {
 		String pseudo = "";
 		try {
@@ -111,21 +107,12 @@ public class UserManager {
 		return UserTab.get(i);
 	}
 
-	public static int length() {
-		return UserTab.size();
-	}
-
 	public static void printUserTab() {
 		System.out.print("- - UserTab : ");
 		for (int i = 0; i < UserTab.size(); i++) {
 			System.out.print(UserTab.get(i).getPseudo() + " ");
 		}
 		System.out.println();
-	}
-
-	public static void changePort(String pseudo, int port) {
-		int index = findUser(pseudo);
-		UserTab.get(index).setPort(port);
 	}
 
 	public static ArrayList<User> getUserTab() {

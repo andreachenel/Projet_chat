@@ -26,7 +26,7 @@ public class InterfaceConnexion {
 	Color red;
 
 	public InterfaceConnexion() {
-		interfaceFrame = new JFrame("Log in");
+		interfaceFrame = new JFrame("Log in / Register");
 		idField = new JTextField(10);
 		pwdField = new JPasswordField();
 		pseudoField = new JTextField();
@@ -35,7 +35,7 @@ public class InterfaceConnexion {
 		enterId = new JLabel("Username");
 		enterPwd = new JLabel("Password");
 		pseudoMessage = new JLabel();
-		loginButton = new JButton("Log in");
+		loginButton = new JButton("Log in / Register");
 		red = new Color(64, 22, 12);
 		enterId.setForeground(Color.WHITE);
 		enterPwd.setForeground(Color.WHITE);
@@ -134,7 +134,7 @@ public class InterfaceConnexion {
 		enterPwd.setBounds(30, 100, 150, 20);
 		idField.setBounds(180, 50, 150, 20);
 		pwdField.setBounds(180, 100, 150, 20);
-		loginButton.setBounds(180, 150, 150, 20);
+		loginButton.setBounds(170, 150, 180, 20);
 		pseudoField.setBounds(180, 250, 150, 20);
 		connectedMessage.setBounds(350, 180, 500, 30);
 		errorMessage.setBounds(350, 150, 500, 30);

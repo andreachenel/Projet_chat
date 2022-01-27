@@ -61,7 +61,7 @@ public class NetworkManager {
 
 		// Check if has not received a denial after
 		// some time
-		if (pseudoOk) {
+		if (pseudoOk && !pseudo.equals("")) {
 			System.out.println("	-> Confirming pseudo " + pseudo);
 			Message confirmMessage = new Message(MessageType.CONFIRMPSEUDO, us);
 			UDPClientThread confirmClient = new UDPClientThread(confirmMessage, "255.255.255.255", UDPListenPort);

@@ -17,7 +17,7 @@ public class InterfaceManager {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 
-		MainTruc inter = new MainTruc(); // A changer
+		MainInterface inter = new MainInterface(); 
 
 		inter.interfaceFrame.revalidate();
 		inter.interfaceFrame.repaint();

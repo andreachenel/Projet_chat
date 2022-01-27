@@ -21,7 +21,7 @@ import bdd.DatabaseManager;
 import threads.ThreadManager;
 import users.UserManager;
 
-public class MainTruc {
+public class MainInterface {
 	JFrame interfaceFrame;
 	JTextField msg;
 	JLabel coUsr;
@@ -41,12 +41,12 @@ public class MainTruc {
 			while (rs.next()) {
 				String sender = rs.getString("id1");
 
-				// if message sent by us, put it on the right in blue
+				// if message sent by us, put it on the right
 				if (sender.equals(UserManager.getMyID())) {
 					result += (rs.getString("time") + "    								" + rs.getString("message")
 							+ "\n");
 
-					// put it on the left in red
+					// otherwise put it on the left
 				} else {
 					result += (rs.getString("time") + "    " + rs.getString("message") + "\n");
 				}
@@ -80,7 +80,7 @@ public class MainTruc {
 		}
 	}
 
-	public MainTruc() {
+	public MainInterface() {
 		interfaceFrame = new JFrame("Chat");
 		msg = new JTextField(10);
 		coUsr = new JLabel("Connected Users : ");
@@ -93,13 +93,11 @@ public class MainTruc {
 
 		txt = new JTextArea(200, 100); // lignes, colonnes
 
-		interfaceFrame.setLayout(new BorderLayout());
-		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		interfaceFrame.getContentPane().setLayout(null);
-
 		txt.setFont(new Font("Serif", Font.PLAIN, 25));
 		txt.setText("Choose a user");
 
+		interfaceFrame.setLayout(new BorderLayout());
+		interfaceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		interfaceFrame.setSize(600, 600);
 		interfaceFrame.getContentPane().setLayout(null);
 
@@ -112,6 +110,7 @@ public class MainTruc {
 		scroll.setBounds(30, 70, 1200, 420);
 		interfaceFrame.getContentPane().add(scroll);
 
+		// Action Listeners for buttons
 		select.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
@@ -198,10 +197,6 @@ public class MainTruc {
 		Updater u = new Updater();
 		u.start();
 
-	}
-
-	public String getUserChoosen() {
-		return usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 	}
 
 }
