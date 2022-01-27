@@ -62,7 +62,7 @@ public class DatabaseManager {
 				}
 
 				statement = connection.createStatement();
-				statement.setQueryTimeout(5); // set timeout to 5sec.
+				statement.setQueryTimeout(3); // set timeout to 5sec.
 
 				statement.close();
 			}
