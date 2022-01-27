@@ -27,6 +27,7 @@ public class PseudoInterface {
 		validateButton = new JButton("Ok");
 		interfacePanel = new JPanel();
 		enterPseudo = new JLabel("Enter your new pseudo");
+		pseudoMessage = new JLabel();
 		
 		// Create the panel
 		interfacePanel = new JPanel(null);
@@ -42,11 +43,13 @@ public class PseudoInterface {
 				int requestResult = NetworkManager.requestPseudo(pseudo);
 				if (requestResult == 0) {
 					pseudoMessage.setText("Pseudo ok");
-//					interfaceFrame.setVisible(false);
-//					interfaceFrame.dispose();
+					validateButton.setText("pseudo ok");
+					interfaceFrame.setVisible(false);
+					interfaceFrame.dispose();
 
 				} else if (requestResult == -1) {
 					pseudoMessage.setText("Pseudo indisponible");
+					validateButton.setText("invalid pseudo");
 				} else {
 					pseudoMessage.setText("Not connected");
 					}
@@ -58,17 +61,19 @@ public class PseudoInterface {
 		// Set bounds for every component
 		pseudoField.setBounds(10, 50, 150, 20);
 		validateButton.setBounds(10, 100, 150, 20);
-		enterPseudo.setBounds(10, 10, 300, 10);
+		enterPseudo.setBounds(10, 10, 300, 20);
+		pseudoMessage.setBounds(10, 350, 150, 20);
 		
 		//Add to the panel
 		interfaceFrame.add(enterPseudo);
 		interfaceFrame.add(validateButton);
 		interfaceFrame.add(pseudoField);
+		interfaceFrame.add(pseudoMessage);
 		interfaceFrame.getContentPane().add(interfacePanel, BorderLayout.CENTER);
 
 		// Display the window
 		interfaceFrame.pack();
-		interfaceFrame.setSize(600, 400);
+		interfaceFrame.setSize(300, 200);
 	}
 
 	public void run() {

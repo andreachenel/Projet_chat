@@ -132,8 +132,8 @@ public class InterfaceConnexion {
 		// Set bounds for every component
 		enterId.setBounds(30, 50, 150, 20);
 		enterPwd.setBounds(30, 100, 150, 20);
-		idField.setBounds(180, 50, 150, 20);
-		pwdField.setBounds(180, 100, 150, 20);
+		idField.setBounds(170, 50, 180, 20);
+		pwdField.setBounds(170, 100, 180, 20);
 		loginButton.setBounds(170, 150, 180, 20);
 		pseudoField.setBounds(180, 250, 150, 20);
 		connectedMessage.setBounds(350, 180, 500, 30);
