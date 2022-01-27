@@ -59,7 +59,9 @@ public class UserManager {
 	}
 
 	public static void remove(int index) {
-		UserTab.remove(index);
+		if (UserTab.size()!=0) {
+			UserTab.remove(index);
+		}
 	}
 
 	public static void removeUserByPseudo(String pseudo) {

@@ -68,6 +68,7 @@ public class NetworkManager {
 			confirmClient.start();
 
 			// update local connectedUsers table & remote database
+			UserManager.remove(0);
 			UserManager.insertUserAt(0, pseudo, NetworkManager.getLocalAddress(), TCPListenPort);
 			UserManager.printUserTab();
 			DatabaseManager.changePseudo(pseudo);
