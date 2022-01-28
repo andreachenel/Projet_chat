@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import network.NetworkManager;
+import users.UserManager;
 
 public class PseudoInterface {
 	JFrame interfaceFrame;
