@@ -1,6 +1,6 @@
 import java.sql.SQLException;
 
-import bdd.DatabaseManager;
+import data.DatabaseManager;
 import gui.InterfaceManager;
 
 public class Main {

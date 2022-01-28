@@ -1,4 +1,4 @@
-package threads;
+package network;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -7,10 +7,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
-import network.NetworkManager;
-import users.UserManager;
+import data.UserManager;
 
-public class ThreadManager extends Thread {
+public class TCPManager extends Thread {
 
 	private boolean TCPServerRunning = true;
 	private static HashMap<InetAddress, TCPThread> openTCPConnections = new HashMap<>();
@@ -53,7 +52,7 @@ public class ThreadManager extends Thread {
 		}
 	}
 
-	public ThreadManager() {
+	public TCPManager() {
 	}
 
 	public void printTCPConnections() {
