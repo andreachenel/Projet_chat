@@ -42,8 +42,8 @@ public class MainInterface {
 				String sender = rs.getString("id1");
 
 				// if message sent by us, put it on the right
-				if (sender.equals(UserManager.getMyID())) {
-					result += (rs.getString("time") + "    								" + rs.getString("message")
+				if (sender.equalsIgnoreCase((UserManager.getMyID()))) {
+					result += (rs.getString("time") + "    						" + rs.getString("message")
 							+ "\n");
 
 					// otherwise put it on the left
