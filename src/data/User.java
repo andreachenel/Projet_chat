@@ -1,4 +1,4 @@
-package users;
+package data;
 
 import java.io.IOException;
 import java.io.Serializable;

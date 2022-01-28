@@ -1,4 +1,4 @@
-package threads;
+package network;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

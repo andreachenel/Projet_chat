@@ -1,12 +1,12 @@
-package threads;
+package network;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
-import bdd.DatabaseManager;
-import users.UserManager;
+import data.DatabaseManager;
+import data.UserManager;
 
 public class TCPThread extends Thread {
 

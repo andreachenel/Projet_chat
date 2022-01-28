@@ -3,13 +3,14 @@ package gui;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import bdd.DatabaseManager;
+import data.DatabaseManager;
 import network.NetworkManager;
-import threads.ThreadManager;
-import threads.UDPListenThread;
 
 public class InterfaceManager {
 
+	InterfaceConnexion connexionInt ;
+	MainInterface mainInt ;
+	
 	public InterfaceManager() {
 	}
 
@@ -17,23 +18,21 @@ public class InterfaceManager {
 		DatabaseManager DBM = new DatabaseManager();
 		DBM.create();
 
-		MainInterface inter = new MainInterface(); 
+		mainInt = new MainInterface(); 
 
-		inter.interfaceFrame.revalidate();
-		inter.interfaceFrame.repaint();
-		InterfaceConnexion connex = new InterfaceConnexion();
-		connex.run();
-		connex.interfaceFrame.addWindowListener(new WindowListener() {
+		mainInt.interfaceFrame.revalidate();
+		mainInt.interfaceFrame.repaint();
+		connexionInt = new InterfaceConnexion();
+		connexionInt.run();
+		connexionInt.interfaceFrame.addWindowListener(new WindowListener() {
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				UDPListenThread ult = new UDPListenThread(NetworkManager.UDPListenPort);
-				ult.start();
+				NetworkManager.createUDPListener() ;
+				NetworkManager.createTCPServer() ;
 
-				ThreadManager tm = new ThreadManager();
-				tm.start();
 
-				inter.run();
+				mainInt.run();
 			}
 
 			@Override
@@ -61,7 +60,7 @@ public class InterfaceManager {
 			}
 		});
 
-		inter.interfaceFrame.addWindowListener(new WindowListener() {
+		mainInt.interfaceFrame.addWindowListener(new WindowListener() {
 			@Override
 			public void windowActivated(WindowEvent arg1) {
 			}

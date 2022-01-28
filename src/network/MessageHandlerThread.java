@@ -1,9 +1,7 @@
 package network;
 
-import threads.ThreadManager;
-import threads.UDPClientThread;
-import users.User;
-import users.UserManager;
+import data.User;
+import data.UserManager;
 
 public class MessageHandlerThread extends Thread {
 	private Message received;
@@ -58,7 +56,7 @@ public class MessageHandlerThread extends Thread {
 		case DISCONNECTED:
 			System.out.println("User disconnected: " + us.getPseudo());
 			UserManager.removeUserByPseudo(us.getPseudo());
-			ThreadManager.closeTCP(us.getAddrIp());
+			TCPManager.closeTCP(us.getAddrIp());
 			break;
 		}
 	}

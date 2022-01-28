@@ -6,11 +6,9 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
 
-import bdd.DatabaseManager;
-import threads.UDPClientThread;
-import threads.UDPListenThread;
-import users.User;
-import users.UserManager;
+import data.DatabaseManager;
+import data.User;
+import data.UserManager;
 
 public class NetworkManager {
 
@@ -68,7 +66,6 @@ public class NetworkManager {
 			confirmClient.start();
 
 			// update local connectedUsers table & remote database
-			UserManager.remove(0);
 			UserManager.insertUserAt(0, pseudo, NetworkManager.getLocalAddress(), TCPListenPort);
 			UserManager.printUserTab();
 			DatabaseManager.changePseudo(pseudo);
@@ -80,6 +77,22 @@ public class NetworkManager {
 			pseudoOk = true;
 			return -1;
 		}
+	}
+	
+	public static int send (String selectedUser, String message) {
+		TCPManager t = new TCPManager();
+		return t.sendTo(selectedUser, message) ;
+	}
+	
+	public static void createUDPListener () {
+		UDPListenThread ult = new UDPListenThread(NetworkManager.UDPListenPort);
+		ult.start();
+	}
+	
+	public static void createTCPServer() {
+		TCPManager tm = new TCPManager();
+		tm.start();
+		
 	}
 
 	public static int disconnect() {
@@ -93,5 +106,7 @@ public class NetworkManager {
 		requestClient.start();
 		return 0;
 	}
+
+
 
 }

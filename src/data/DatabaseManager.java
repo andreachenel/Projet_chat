@@ -1,4 +1,4 @@
-package bdd;
+package data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
-
-import users.UserManager;
 
 public class DatabaseManager {
 	static Connection connection = null;

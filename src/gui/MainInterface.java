@@ -17,16 +17,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import bdd.DatabaseManager;
-import threads.ThreadManager;
-import users.UserManager;
+import data.DatabaseManager;
+import data.UserManager;
+import network.NetworkManager;
 
 public class MainInterface {
 	JFrame interfaceFrame;
 	JTextField msg;
 	JLabel coUsr;
 	JPanel panel;
-	JButton send, select, logOut, refresh, pseudoCh;
+	JButton send, select, logOut, refresh;
 	JComboBox<String> usrComboBox;
 	String[] usersToChoose;
 	JScrollPane scroll;
@@ -88,8 +88,7 @@ public class MainInterface {
 		select = new JButton("Select");
 		logOut = new JButton("Log out");
 		refresh = new JButton("Refresh");
-		send.setEnabled(false);	
-		pseudoCh = new JButton("Change pseudo");
+		send.setEnabled(false);
 
 		txt = new JTextArea(200, 100); // lignes, colonnes
 
@@ -116,7 +115,7 @@ public class MainInterface {
 				selectedUser = usrComboBox.getItemAt(usrComboBox.getSelectedIndex());
 				txt.setFont(new Font("Serif", Font.PLAIN, 15));
 				txt.setCaretPosition(txt.getText().length() - 1);
-				send.setEnabled(true);		
+				send.setEnabled(true);
 			}
 		});
 
@@ -133,25 +132,19 @@ public class MainInterface {
 				txt.setCaretPosition(txt.getText().length() - 1);
 			}
 		});
-		pseudoCh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PseudoInterface pi = new PseudoInterface();
-				pi.run();
-			}
-		});
 
 		send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = msg.getText();
 
-				ThreadManager t = new ThreadManager();
-				if (t.sendTo(selectedUser, message)==0) {
-					msg.setText("");					
+				if (NetworkManager.send(selectedUser, message) == 0) {
+					msg.setText("");
 				} else {
-					txt.setText("User "+selectedUser+" disconnected ! Choose another user");
-					selectedUser=null ;
+					txt.setText("User " + selectedUser + " disconnected ! Choose another user");
+					selectedUser = null;
 					updateConnectedUsers();
-					
+					send.setEnabled(false);
+
 				}
 			}
 		});
@@ -167,7 +160,6 @@ public class MainInterface {
 		select.setBounds(400, 20, 80, 30);
 		logOut.setBounds(1100, 20, 150, 30);
 		refresh.setBounds(500, 20, 150, 30);
-		pseudoCh.setBounds(700, 20, 150, 30);
 
 		// Add to the panel
 		interfaceFrame.add(coUsr);
@@ -177,7 +169,6 @@ public class MainInterface {
 		interfaceFrame.add(usrComboBox);
 		interfaceFrame.add(refresh);
 		interfaceFrame.add(logOut);
-		interfaceFrame.add(pseudoCh);
 
 		interfaceFrame.getContentPane().add(scroll, BorderLayout.CENTER);
 		interfaceFrame.getContentPane().add(panel, BorderLayout.CENTER);
